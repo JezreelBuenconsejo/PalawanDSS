@@ -37,6 +37,8 @@ Route::get('/monitoringPage',  [viewData::class,'viewMonitoringPage'])->middlewa
 
 Route::post("dssData",[postDataController::class,'addData']);
 
+Route::post("InputUpdate",[postDataController::class,'addInputUpdate']);
+
 Route::get('/decision', [dssController::class,'result'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/result', [viewData::class,'viewResults'])->middleware(['auth'])->name('dashboard');

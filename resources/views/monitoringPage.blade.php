@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class=" justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mt-3" style="font-family: Nunito, sans-serif;">Dashboard</h3>
-                    @if ($res->updateData == true)
+                    @if ($res->updateData->checkUD == 1)
                     <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="/updateData">
                       <i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;
                       Update Data
@@ -216,10 +216,10 @@
 var myChart = new Chart('wasteBreakdown', {
     type: 'bar',
     data: {
-      labels:['Initial Data','2nd Year', '4th Year', '6th year', '8th Year', '10th Year', 'Final Projection'],
+      labels:['Initial Data','1st Update', '2nd Update', '3rd Update', '4th Update', 'Final Update', 'Final Projection'],
         datasets: [{
             label: 'Biodegradable',
-            data: ['{{$res->waste->ibio}}',0,0,0,0,0,'{{$res->waste->pbio}}'],
+            data: ['{{$res->waste->ibio}}','{{$res->UData[0]->UD2ndBio}}','{{$res->UData[0]->UD4thBio}}','{{$res->UData[0]->UD6thBio}}','{{$res->UData[0]->UD8thBio}}','{{$res->UData[0]->UD10thBio}}','{{$res->waste->pbio}}'],
             backgroundColor: [
                 '#4e73df',
                 '#4e73df',
@@ -242,7 +242,7 @@ var myChart = new Chart('wasteBreakdown', {
         },
         {
             label: 'Recyclable',
-            data: ['{{$res->waste->irec}}',0,0,0,0,0,'{{$res->waste->prec}}'],
+            data: ['{{$res->waste->irec}}','{{$res->UData[0]->UD2ndRec}}','{{$res->UData[0]->UD4thRec}}','{{$res->UData[0]->UD6thRec}}','{{$res->UData[0]->UD8thRec}}','{{$res->UData[0]->UD10thRec}}','{{$res->waste->prec}}'],
             backgroundColor: [
                 '#1cc88a',
                 '#1cc88a',
@@ -265,7 +265,7 @@ var myChart = new Chart('wasteBreakdown', {
         },
         {
             label: 'Residual',
-            data: ['{{$res->waste->ires}}',0,0,0,0,0,'{{$res->waste->pres}}'],
+            data: ['{{$res->waste->ires}}','{{$res->UData[0]->UD2ndRes}}','{{$res->UData[0]->UD4thRes}}','{{$res->UData[0]->UD6thRes}}','{{$res->UData[0]->UD8thRes}}','{{$res->UData[0]->UD10thRes}}','{{$res->waste->pres}}'],
             backgroundColor: [
                 '#FDDA0D',
                 '#FDDA0D',
@@ -287,7 +287,7 @@ var myChart = new Chart('wasteBreakdown', {
             borderWidth: 1
         },{
             label: 'Special',
-            data: ['{{$res->waste->ispe}}',0,0,0,0,0,'{{$res->waste->pspe}}'],
+            data: ['{{$res->waste->ispe}}','{{$res->UData[0]->UD2ndSpe}}','{{$res->UData[0]->UD4thSpe}}','{{$res->UData[0]->UD6thSpe}}','{{$res->UData[0]->UD8thSpe}}','{{$res->UData[0]->UD10thSpe}}','{{$res->waste->pspe}}'],
             backgroundColor: [
               'rgba(255,0,0,0.64)',
               'rgba(255,0,0,0.64)',
@@ -358,30 +358,21 @@ myChart.update();
     
     //residual chart
     new Chart("residualWaste", {
-      type: 'bar',
+      type: 'line',
       data: {
         datasets: [{
             label: "Residual Waste",
             fill: false,
             data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
             backgroundColor:'rgba(78, 115, 223, 1)',
-            borderColor:'rgba(78, 115, 223, 1)',
-            type:'line'
+            borderColor:'rgba(78, 115, 223, 1)'
           },
           {
             label: "Diverted Residual Waste",
             fill: false,
             data: DRW1.map(o => ({ x: o.label, y: Number(o.DRW)})),
             backgroundColor:'rgba(255,0,0,0.64)',
-            borderColor:'rgba(255,0,0,0.64)',
-            type:'line'
-          },
-          {
-            label: "Updated Residual Waste",
-            fill: false,
-            data: 0,
-            backgroundColor:'rgba(155,0,0,0.64)',
-            borderColor:'rgba(255,0,0,0.64)',
+            borderColor:'rgba(255,0,0,0.64)'
           }
 
         ]
@@ -431,13 +422,6 @@ myChart.update();
             backgroundColor:'rgba(78, 115, 223, 1)',
             borderColor:'rgba(78, 115, 223, 1)',
             type:'line'
-          },
-          {
-            label: "Updated Total Waste",
-            fill: false,
-            data: 0,
-            backgroundColor:'rgba(178, 15, 223, 1)',
-            borderColor:'rgba(178, 15, 223, 1)'
           }
         ]
       },

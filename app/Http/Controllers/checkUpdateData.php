@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 use App\Models\dssdata;
 use App\Models\benchmark;
 use App\Models\updateData;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class checkUpdateData extends Controller
 {
@@ -22,22 +24,27 @@ class checkUpdateData extends Controller
             foreach($DataID as $data){
                 $DID = $data->dataID;
             }
-            DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `2ndBio`, `2ndRec`, `2ndRes`, `2ndSpe`, `2ndTotal`, `2ndDate`, `4thBio`, `4thRec`, `4thRes`, `4thSpe`, `4thTotal`, `4thDate`, `6thBio`, `6thRec`, `6thRes`, `6thSpe`, `6thTotal`, `6thDate`, `8thBio`, `8thRec`, `8thRes`, `8thSpe`, `8thTotal`, `8thDate`, `10thBio`, `10thRec`, `10thRes`, `10thSpe`, `10thTotal`, `10thDate`) VALUES ( :DataID,:user, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$user,'DataID'=>$DID));
+            DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `UD2ndBio`, `UD2ndRec`, `UD2ndRes`, `UD2ndSpe`, `UD2ndTotal`, `UD2ndDate`, `UD4thBio`, `UD4thRec`, `UD4thRes`, `UD4thSpe`, `UD4thTotal`, `UD4thDate`, `UD6thBio`, `UD6thRec`, `UD6thRes`, `UD6thSpe`, `UD6thTotal`, `UD6thDate`, `UD8thBio`, `UD8thRec`, `UD8thRes`, `UD8thSpe`, `UD8thTotal`, `UD8thDate`, `UD10thBio`, `UD10thRec`, `UD10thRes`, `UD10thSpe`, `UD10thTotal`, `UD10thDate`) VALUES ( :DataID,:user, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$user,'DataID'=>$DID));
         }
 
     }
     function viewUpdateData(){
-    $user = Auth::id();
-        $checkUD = new checkUpdateData();
-        if($checkUD == true){
-            $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
-            $Page = "updateData";
-            return view('dashboard',['Page' => $Page]);
+        try{
+            $user = Auth::id();
+            $check = $this->checkUpdateDate();
+            if($check['checkUD'] == 1){
+                
+                $Page = "updateData";
+                return view('dashboard',['Page' => $Page]);
+            }
+            else{
+                
+                return redirect('/dashboard');
+            }
+        }catch(Exception $e){
+            abort(404);
         }
-        else{
-            
-            return redirect('/dashboard');
-        }
+        
     }
     function checkUpdateDate(){
     $user = Auth::id();
@@ -49,61 +56,87 @@ class checkUpdateData extends Controller
     
     $updateData = new updateData();
     
-    $secondDate = DB::table('updateddata')->select('2ndDate')->where('userID', $user)->get();
-    $dateSecond = implode(',', $secondDate->pluck('2ndDate')->toArray());
+    $secondDate = DB::table('updateddata')->select('UD2ndDate')->where('userID', $user)->get();
+    $dateSecond = implode(',', $secondDate->pluck('UD2ndDate')->toArray());
 
-    $fourthDate = DB::table('updateddata')->select('4thDate')->where('userID', $user)->get();
-    $dateFourth = implode(',', $fourthDate->pluck('4thDate')->toArray());
+    $fourthDate = DB::table('updateddata')->select('UD4thDate')->where('userID', $user)->get();
+    $dateFourth = implode(',', $fourthDate->pluck('UD4thDate')->toArray());
 
-    $sixthDate = DB::table('updateddata')->select('6thDate')->where('userID', $user)->get();
-    $dateSixth = implode(',', $sixthDate->pluck('6thDate')->toArray());
+    $sixthDate = DB::table('updateddata')->select('UD6thDate')->where('userID', $user)->get();
+    $dateSixth = implode(',', $sixthDate->pluck('UD6thDate')->toArray());
 
-    $eighthDate = DB::table('updateddata')->select('8thDate')->where('userID', $user)->get();
-    $dateEighth = implode(',', $eighthDate->pluck('8thDate')->toArray());
+    $eighthDate = DB::table('updateddata')->select('UD8thDate')->where('userID', $user)->get();
+    $dateEighth = implode(',', $eighthDate->pluck('UD8thDate')->toArray());
 
-    
 
     $databaseDate = Carbon::parse($date_created[0]->date_created);
     // Check if the difference; between the current date and the date from the database is 2 years
+        $yrs = 0;
     switch ($currentDate->diffInYears($databaseDate)) {
         case 2:
+            if($dateSecond == NULL || $dateSecond == ''){
             $updateData = true;
+            $yrs = 2;
+            }
             break;
         case 3:
             if($dateSecond == NULL || $dateSecond == ''){
                 $updateData = true;
+                $yrs = 2;
             }
             break;
         case 4:
-            $updateData = true;
+            if($dateFourth == NULL || $dateFourth == ''){
+                $updateData = true;
+                $yrs = 4;
+            }
             break;
         case 5:
             if($dateFourth == NULL || $dateFourth == ''){
                 $updateData = true;
+                $yrs = 4;
             }
             break;            
         case 6:
-            $updateData = true;
+            if($dateSixth == NULL || $dateSixth == ''){
+                $updateData = true;
+                $yrs = 6;
+            }
             break;
         case 7:
             if($dateSixth == NULL || $dateSixth == ''){
                 $updateData = true;
+                $yrs = 6;
             }
             break;
         case 8:
-            $updateData = true;
+            if($dateEighth == NULL || $dateEighth == ''){
+                $updateData = true;
+                $yrs = 8;
+            }
             break;
         case 9:
             if($dateEighth == NULL || $dateEighth == ''){
                 $updateData = true;
+                $yrs = 8;
             }
             break;
         case 10:
             $updateData = true;
+            $yrs = 10;
             break;
         default:  
                 $updateData = false;
+                $yrs = 1;
     }
+
+        $UD = array('checkUD' => $updateData, 'checkyrs' => $yrs);
+        return $UD;
+    }
+
+    function retrieveData(){
+        $user = Auth::id();
+        $updateData = DB::select('SELECT * FROM `updateddata` WHERE userID = :user ORDER BY updatedDataID DESC LIMIT 1',array('user'=>$user));
         return $updateData;
     }
 }

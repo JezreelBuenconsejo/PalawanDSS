@@ -145,7 +145,8 @@ class viewData extends Controller
         $check = new checkUpdateData();
         $check->checkDB();
         $updateData = $check->checkUpdateDate();
-        
+
+        $UData = $check->retrieveData();
         
         //initial data
         $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
@@ -228,7 +229,7 @@ class viewData extends Controller
         //waste date
         $waste = $this->total_waste($bio, $rec, $res, $spe, $total, $pop, $gr,$dateCreated,$time);
 
-        $result = array("updateData"=>$updateData,"initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections,"waste"=>$waste);
+        $result = array('UData'=>$UData,"updateData"=>$updateData,"initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections,"waste"=>$waste);
         
         $resultsEncode = json_encode($result);
         $res = json_decode($resultsEncode);

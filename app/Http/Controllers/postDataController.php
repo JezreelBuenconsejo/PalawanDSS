@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Builder\Param;
 use App\Http\Controllers\dssController;
+use App\Http\Controllers\checkUpdateData;
 use App\Models\updateData;
 
 class postDataController extends Controller
@@ -49,7 +50,7 @@ class postDataController extends Controller
         foreach($DataID as $data){
             $DID = $data->dataID;
         }
-        DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `2ndBio`, `2ndRec`, `2ndRes`, `2ndSpe`, `2ndTotal`, `2ndDate`, `4thBio`, `4thRec`, `4thRes`, `4thSpe`, `4thTotal`, `4thDate`, `6thBio`, `6thRec`, `6thRes`, `6thSpe`, `6thTotal`, `6thDate`, `8thBio`, `8thRec`, `8thRes`, `8thSpe`, `8thTotal`, `8thDate`, `10thBio`, `10thRec`, `10thRes`, `10thSpe`, `10thTotal`, `10thDate`) VALUES (:user, :DataID, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$userID,'DataID'=>$DID));
+        DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `UD2ndBio`, `UD2ndRec`, `UD2ndRes`, `UD2ndSpe`, `UD2ndTotal`, `UD2ndDate`, `UD4thBio`, `UD4thRec`, `UD4thRes`, `UD4thSpe`, `UD4thTotal`, `UD4thDate`, `UD6thBio`, `UD6thRec`, `UD6thRes`, `UD6thSpe`, `UD6thTotal`, `UD6thDate`, `UD8thBio`, `UD8thRec`, `UD8thRes`, `UD8thSpe`, `UD8thTotal`, `UD8thDate`, `UD10thBio`, `UD10thRec`, `UD10thRes`, `UD10thSpe`, `UD10thTotal`, `UD10thDate`) VALUES (:user, :DataID, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$userID,'DataID'=>$DID));
 
 
         return redirect('/decision');
@@ -89,5 +90,38 @@ class postDataController extends Controller
         $dssdata->comments = $req->Projection->projectedComment;
 
         $dssdata->save();
+    }
+
+    public function addInputUpdate(Request $req){
+        
+        $currentDate = Carbon::now();
+        $userID = Auth::id();
+        $check = new checkUpdateData();
+        $checkYRS = $check->checkUpdateDate();
+        if($checkYRS['checkyrs'] == 2){
+            $UID = DB::select("SELECT `updatedDataID` FROM `updateddata` WHERE userID = :id ORDER by `updatedDataID`DESC LIMIT 1",array('id'=>$userID));
+            DB::select("UPDATE `updateddata` SET `UD2ndBio` = :bio, `UD2ndRec` = :rec, `UD2ndRes` = :res, `UD2ndSpe` = :spe, `UD2ndTotal` = :total, `UD2ndDate` = :secDate WHERE `updateddata`.`updatedDataID` = :id  ORDER BY updatedDataID DESC LIMIT 1",array('id'=>$UID[0]->updatedDataID, 'bio'=>$req->biodegradable,'rec'=>$req->recyclable,'res'=>$req->residual,'spe'=>$req->special,'total'=>$req->totalWaste,'secDate'=>$currentDate));
+        }
+        else if($checkYRS['checkyrs'] == 4){
+            $UID = DB::select("SELECT `updatedDataID` FROM `updateddata` WHERE userID = :id ORDER by `updatedDataID`DESC LIMIT 1",array('id'=>$userID));
+            DB::select("UPDATE `updateddata` SET `UD4thBio` = :bio, `UD4thRec` = :rec, `UD4thRes` = :res, `UD4thSpe` = :spe, `UD4thTotal` = :total, `UD4thDate` = :fourthDate WHERE `updateddata`.`updatedDataID` = :id  ORDER BY updatedDataID DESC LIMIT 1",array('id'=>$UID[0]->updatedDataID, 'bio'=>$req->biodegradable,'rec'=>$req->recyclable,'res'=>$req->residual,'spe'=>$req->special,'total'=>$req->totalWaste,'fourthDate'=>$currentDate));
+
+        }
+        else if($checkYRS['checkyrs'] == 6){
+            $UID = DB::select("SELECT `updatedDataID` FROM `updateddata` WHERE userID = :id ORDER by `updatedDataID`DESC LIMIT 1",array('id'=>$userID));
+            DB::select("UPDATE `updateddata` SET `UD6thBio` = :bio, `UD6thRec` = :rec, `UD6thRes` = :res, `UD6thSpe` = :spe, `UD6thTotal` = :total, `UD6thDate` = :sixthDate WHERE `updateddata`.`updatedDataID` = :id  ORDER BY updatedDataID DESC LIMIT 1",array('id'=>$UID[0]->updatedDataID, 'bio'=>$req->biodegradable,'rec'=>$req->recyclable,'res'=>$req->residual,'spe'=>$req->special,'total'=>$req->totalWaste,'sixthDate'=>$currentDate));
+
+        }
+        else if($checkYRS['checkyrs'] == 8){
+            $UID = DB::select("SELECT `updatedDataID` FROM `updateddata` WHERE userID = :id ORDER by `updatedDataID`DESC LIMIT 1",array('id'=>$userID));
+            DB::select("UPDATE `updateddata` SET `UD8thBio` = :bio, `UD8thRec` = :rec, `UD8thRes` = :res, `UD8thSpe` = :spe, `UD8thTotal` = :total, `UD8thDate` = :eigthDate WHERE `updateddata`.`updatedDataID` = :id  ORDER BY updatedDataID DESC LIMIT 1",array('id'=>$UID[0]->updatedDataID, 'bio'=>$req->biodegradable,'rec'=>$req->recyclable,'res'=>$req->residual,'spe'=>$req->special,'total'=>$req->totalWaste,'eigthDate'=>$currentDate));
+
+        }
+        else if($checkYRS['checkyrs'] == 10){
+            $UID = DB::select("SELECT `updatedDataID` FROM `updateddata` WHERE userID = :id ORDER by `updatedDataID`DESC LIMIT 1",array('id'=>$userID));
+            DB::select("UPDATE `updateddata` SET `UD10thBio` = :bio, `UD10thRec` = :rec, `UD10thRes` = :res, `UD10thSpe` = :spe, `UD10thTotal` = :total, `UD10thDate` = :tenthDate WHERE `updateddata`.`updatedDataID` = :id  ORDER BY updatedDataID DESC LIMIT 1",array('id'=>$UID[0]->updatedDataID, 'bio'=>$req->biodegradable,'rec'=>$req->recyclable,'res'=>$req->residual,'spe'=>$req->special,'total'=>$req->totalWaste,'tenthDate'=>$currentDate));
+
+        }
+        return redirect('/monitoringPage');
     }
 }
