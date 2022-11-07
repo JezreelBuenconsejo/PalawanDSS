@@ -19,10 +19,8 @@
     <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
-    <link rel="stylesheet" href="assets/css/Navbar.css">
 
     <!-- Scripts -->
-    <script src="assets/js/Navbar.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
