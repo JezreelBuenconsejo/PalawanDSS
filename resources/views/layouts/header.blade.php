@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="assets/css/Navbar.css">
 
     <!-- Scripts -->
-    <script src="assets/bootstrap/js/Navbar.js"></script>
+    <script src="assets/js/Navbar.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
