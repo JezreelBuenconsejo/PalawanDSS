@@ -172,5 +172,3 @@
         </div>
     </div>
 </section>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/Multi-step-form.js"></script>

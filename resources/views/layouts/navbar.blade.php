@@ -1,11 +1,11 @@
+
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
 <nav class="navbar navbar-light navbar-expand-md py-3" style="background-color: rgb(171, 245, 171)">
-    <div class="container">
+    <div class="container" style="margin-left:2%">
+            <img src="/picture/PalawanSeal.png" style="height: 70px; width: 70px;">
         <a class="navbar-brand d-flex align-items-center" href="#">
-            <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="height: 50px; width: 10px; margin-right: 10px">
-                <img src="/picture/PalawanSeal.png" class="block fill-current text-gray-600" style="height: 70px; width: 70px; margin-right: 10px">
-            </span>
-            
-            <span class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 25px">
+            <span class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 3%">
                 {{ __('Palawan Decision Support System') }}
             </span>
         </a>
@@ -38,5 +38,3 @@
         </div>
     </div>
 </nav>
-
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
