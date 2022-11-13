@@ -54,7 +54,7 @@
                             <h3>Lorem impsum dolor sit amet</h3>
                             <div class="getting-started-info">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            </div><button class="btn btn-outline-primary btn-lg" type="button">Join Now</button>
+                            </div>
                         </div>
                     </div>
                 </div>

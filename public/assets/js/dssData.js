@@ -21,7 +21,7 @@ $(document).ready(function(){
       $("#lblRecyclable").text(Rec);
       $("#lblResidual").text(Res);
       $("#lblSpecial").text(Spe);
-      $("#lblTotal").text(Total);
+      $("#lblTotal").text(Tot);
       $("#lblPopulation").text(Pop);
       $("#lblGrowthRate").text(GR);
       $("#lblLandArea").text(LA);
@@ -29,6 +29,7 @@ $(document).ready(function(){
       $("#lblR2").text(R2);
       $("#lblYears").text(yrs);
     });
+
     $("#txtBiodegradable,#txtRecyclable,#txtResidual,#txtSpecial").blur(function(){
       var Bio = parseInt($("#txtBiodegradable").val());
       var Rec = parseInt($("#txtRecyclable").val());
@@ -38,4 +39,35 @@ $(document).ready(function(){
       $("#txtTotalWaste").val(Total);
       $("#lblTotalWaste").text(Total);
     });
+
+    $("#txtLandArea").on('input',function() {
+      var LA = $("#txtLandArea").val();
+      if(LA > 50000){
+        $("#notSmallIsland").show();
+      }
+      else{
+        $("#notSmallIsland").hide();
+      }
+    });
+    $("#txtLandArea").blur(function(){
+      var LA = $("#txtLandArea").val();
+      if(LA > 50000){
+        $("#txtLandArea").val('');
+        $("#notSmallIsland").hide();
+      }
+    });
+
+
+    $('#txtEmail').each(function(){
+      var value = $(this).val();
+      var size  = value.length;
+      // playing with the size attribute
+      //$(this).attr('size',size);
+      
+      // playing css width
+      size = size*2.8;
+      $(this).css('width',size*3);
+      
+      })
+
   });

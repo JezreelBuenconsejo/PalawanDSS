@@ -5,9 +5,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/assets/js/dssData.js"></script>
 
-<h2 class="text-center text-wrap">Decision Support System for Solid Waste Disposal Center</h2>
+<h2 class="text-center text-wrap" style="margin: 10px;">Decision Support System for Solid Waste Disposal Center</h2>
 <section>
-    <div id="multple-step-form" class="container overflow-hidden" style="margin-top: 0px;margin-bottom: 10px;padding-bottom: 300px;padding-top: 15px;height: 1000px;max-height: 1000px;min-height: 500px;">
+    <div id="multple-step-form" class="container overflow-hidden" style="margin-top: 0px;margin-bottom: 10px;padding-bottom: 300px;padding-top: 15px;height: 1200px;max-height: 1200px;min-height: 500px;">
         <div id="progress-bar-button" class="multisteps-form">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
@@ -49,7 +49,7 @@
                             <div class="col d-flex justify-content-end"><button class="btn btn-dark btn btn-primary ml-auto js-btn-next" id="btnNextSolidWaste" type="button">Next</button></div>
                         </div>
                     </div>
-                    <div id="single-form-next-prev-population-density" class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <div id="single-form-next-prev-population-density" class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn" style="text-align: center">
                         <h3 class="text-center multisteps-form__title">Population Density</h3>
                         <div id="form-content-1" class="multisteps-form__content">
                             <div class="row form-group my-1 d-flex justify-content-center">
@@ -64,6 +64,7 @@
                                 <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3"><label class="col-form-label d-flex justify-content-end">Land Area</label></div>
                                 <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3"><input class="form-control" type="text" id="txtLandArea" required="" name="landArea"></div>
                             </div>
+                            <span style="color: red; display:none;" id="notSmallIsland">Not Small Island (more than 50,000 ha)</span>
                             <div class="row">
                                 <div class="col"><button class="btn btn-dark btn btn-primary js-btn-prev" id="btnPrevPopulationDensity" type="button" title="Prev">Prev</button></div>
                                 <div class="col d-flex justify-content-end"><button class="btn btn-dark btn btn-primary ml-auto js-btn-next" id="btnNextPopulationDensity" type="button" title="Next">Next</button></div>
@@ -92,7 +93,12 @@
                             </div>
                         </div>
                     </div>
-                    <div id="single-form-prev-review" class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn" style="height: 840px;min-height: 553.09px;max-height: 840px;">
+                    <div id="single-form-prev-review" class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn"style="height: 1075px;min-height: 553.09px;max-height: 1075px;">
+                        <div class="row">
+                            <div class="col-12 d-inline">
+                                <label class="form-label">{{ Auth::user()->name }} ({{ Auth::user()->email }})</label>
+                                <input id="txtEmail" name="email" type="text" style="border: none;background: rgba(0,0,0,0);padding: 0px;" value="{{ Auth::user()->email }}" hidden>
+                            </div>
                         <h3 class="text-center multisteps-form__title">Review Data</h3>
                         <div id="form-content-3" class="multisteps-form__content" style="height: 758.09px;">
                             <div class="row" style="margin: 0;">
@@ -159,10 +165,35 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-9 col-md-10 col-xl-12">
+                                    
+                                </div>
+                                <!---<div class="col" hidden>
+                                    <div class="row">
+                                        <div class="col-xl-6 justify-content-center"><label class="col-form-label fs-5 fw-semibold" style="text-align: center;">Other Necessary Municipal Data</label></div>
+                                    </div>
+                                    <div class="row" style="padding-bottom: 10px;">
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 d-flex justify-content-end"><label class="col-form-label">Municipal Classification</label></div>
+                                        <div class="col-5 col-xl-8 col-form-label" style="padding-right: 0px;padding-left: 0px;padding-top: 0px;padding-bottom: 0px;">
+                                            <select class="form-select" style="width: 118.656px;">
+                                                <option value="1st Class" selected="">1st Class</option>
+                                                <option value="2nd Class">2nd Class</option>
+                                                <option value="3rd Class">3rd Class</option>
+                                                <option value="4th Class">4th Class</option>
+                                                <option value="5th Class">5th Class</option>
+                                                <option value="6th Class">6th Class</option>
+                                            </select></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 d-flex justify-content-end"><label class="col-form-label">Social Acceptability</label></div>
+                                        <div class="col" style="padding-right: 0px;padding-left: 0px;"><input class="form-control" type="text" style="width: 65.667px;"></div>
+                                    </div>
+                                </div>-->
                             </div>
-                            <div class="row" style="margin-top: 16px;">
-                                <div class="col-8 col-sm-9 col-md-10 col-xl-9 col-xxl-10"><button class="btn btn-dark btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button></div>
-                                <div class="col-4 col-sm-2 col-xl-1"><button class="btn btn-dark" type="submit">Submit</button></div>
+                            <div class="row" style="margin-top: 16px;margin-left: 0px;margin-right: 0px;">
+                                <div class="col-12 col-sm-12 col-md-12 col-xl-9 col-xxl-10" style="padding: 0px;width: 100%;">
+                                    <button class="btn btn-dark btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                                    <button class="btn btn-dark d-flex float-end" type="submit">Submit</button></div>
                             </div>
                             <div id="next-prev-buttons-2" class="button-row d-flex mt-4"></div>
                         </div>

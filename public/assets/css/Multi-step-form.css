@@ -119,3 +119,14 @@ body a {
   transform: scale(1);
 }
 
+@media (min-width: 300px) {
+  div {
+  }
+}
+
+@media (min-width: 300px) {
+  .col-form-label {
+    text-align: right;
+  }
+}
+
