@@ -5,18 +5,34 @@ document.getElementsByTagName('head')[0].appendChild(script);
 var Total;
 
 $(document).ready(function(){
+  $('#otherData').hide();
     $("#Review,#btnNextRER").click(function(){
       var Bio = $("#txtBiodegradable").val();
       var Rec = $("#txtRecyclable").val();
-      var Res = $("#txtResidual").val();
+      var Res = parseFloat($("#txtResidual").val());
       var Spe = $("#txtSpecial").val();
       var Tot = $("#lblTotalWaste").text();
       var Pop = $("#txtPopulation").val();
       var GR = $("#txtGrowthRate").val();
       var LA = $("#txtLandArea").val();
-      var R1 = $("#txtR1").val();
-      var R2 = $("#txtR2").val();
-      var yrs = $("#txtYears").val();
+      var R1 = parseFloat($("#txtR1").val());
+      var R2 = parseFloat($("#txtR2").val());
+      var yrs = parseFloat($("#txtYears").val());
+      var RER = (R2 - R1) / yrs;
+      var DRW = Res - (Res * (RER/100));
+
+      if(DRW > 5000){
+        $('#otherData').show();
+        $('#txtSocialAcceptability').prop('required',true);
+        $('#selectMunicipalClass').prop('required',true);
+      }
+      else{
+        $('#otherData').hide();
+        $('#txtSocialAcceptability').prop('required',false);
+        $('#selectMunicipalClass').prop('required',false);
+      }
+
+      
       $("#lblBiodegradable").text(Bio);
       $("#lblRecyclable").text(Rec);
       $("#lblResidual").text(Res);
@@ -28,16 +44,18 @@ $(document).ready(function(){
       $("#lblR1").text(R1);
       $("#lblR2").text(R2);
       $("#lblYears").text(yrs);
+      $("#lblDRW").text(DRW);
+      $("#txtDRW").val(DRW);
     });
 
     $("#txtBiodegradable,#txtRecyclable,#txtResidual,#txtSpecial").blur(function(){
-      var Bio = parseInt($("#txtBiodegradable").val());
-      var Rec = parseInt($("#txtRecyclable").val());
-      var Res = parseInt($("#txtResidual").val());
-      var Spe = parseInt($("#txtSpecial").val());
+      var Bio = parseFloat($("#txtBiodegradable").val());
+      var Rec = parseFloat($("#txtRecyclable").val());
+      var Res = parseFloat($("#txtResidual").val());
+      var Spe = parseFloat($("#txtSpecial").val());
       Total = Bio + Rec + Res + Spe;
-      $("#txtTotalWaste").val(Total);
-      $("#lblTotalWaste").text(Total);
+      $("#txtTotalWaste").val(Total.toFixed(2));
+      $("#lblTotalWaste").text(Total.toFixed(2));
     });
 
     $("#txtLandArea").on('input',function() {

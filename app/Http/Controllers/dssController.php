@@ -7,6 +7,11 @@ use App\Models\dssdata;
 use Illuminate\Support\Facades\Auth;
 class dssController extends Controller
 {
+    function dataInput(){
+        $Page = "dssData";
+        return view('dashboard',['Page' => $Page]);
+    }
+
     function addData(Request $req){
         $userID = Auth::id();
         $dssdata = new dssdata;
@@ -23,8 +28,20 @@ class dssController extends Controller
         $dssdata ->r1=$req->r1;
         $dssdata ->r2=$req->r2;
         $dssdata ->years=$req->years;
+        $dssdata ->diverted_residual_waste=$req->DRW;
+
+        $MunicipalClass = $req->municipalClass;
+        $SocialAcceptability = $req->socialAcceptability;
+
+        if($MunicipalClass != null || $MunicipalClass = ""){
+            $dssdata ->municipal_classification=$MunicipalClass;
+            $dssdata ->social_acceptability=$SocialAcceptability;
+        }
+
         $dssdata ->save();
         return $req->input();
 
     }
+
+
 }

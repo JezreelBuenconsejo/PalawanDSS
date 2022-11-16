@@ -20,8 +20,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [dssController::class,'dataInput'])->middleware(['auth'])->name('dashboard');
 
 Route::post("dssData",[dssController::class,'addData']);
+
+Route::get('dashboard/otherdata', function(){
+
+});

@@ -11,7 +11,7 @@
         <div id="progress-bar-button" class="multisteps-form">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
-                    <div class="multisteps-form__progress"><a class="btn multisteps-form__progress-btn js-active" role="button" title="Solid Waste Data">Solid Waste Data</a><a class="btn multisteps-form__progress-btn" role="button" title="Population Density">Population Density</a><a class="btn multisteps-form__progress-btn" role="button" title="Reduction Efficiency Rating">Reduction Efficiency Rating</a><a class="btn multisteps-form__progress-btn" role="button" title="Review">Review</a></div>
+                    <div class="multisteps-form__progress"><a class="btn multisteps-form__progress-btn js-active" role="button" title="Solid Waste Data">Solid Waste Data</a><a class="btn multisteps-form__progress-btn" role="button" title="Population Density">Population Density</a><a class="btn multisteps-form__progress-btn" role="button" title="Reduction Efficiency Rating">Reduction Efficiency Rating</a><a class="btn multisteps-form__progress-btn" role="button" id="Review" title="Review">Review</a></div>
                 </div>
             </div>
         </div>
@@ -163,20 +163,26 @@
                                             <div class="col-9 col-sm-6 col-xl-8 d-flex justify-content-end"><label class="col-form-label">Years</label></div>
                                             <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblYears" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-9 col-sm-6 col-xl-8 d-flex justify-content-end"><label class="col-form-label">DRW</label></div>
+                                            <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblDRW" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-9 col-md-10 col-xl-12">
                                     
                                 </div>
-                                <!---<div class="col" hidden>
+                                <input id="txtDRW" name="DRW" hidden>
+                                <div class="col" id="otherData">
                                     <div class="row">
                                         <div class="col-xl-6 justify-content-center"><label class="col-form-label fs-5 fw-semibold" style="text-align: center;">Other Necessary Municipal Data</label></div>
                                     </div>
                                     <div class="row" style="padding-bottom: 10px;">
                                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 d-flex justify-content-end"><label class="col-form-label">Municipal Classification</label></div>
                                         <div class="col-5 col-xl-8 col-form-label" style="padding-right: 0px;padding-left: 0px;padding-top: 0px;padding-bottom: 0px;">
-                                            <select class="form-select" style="width: 118.656px;">
-                                                <option value="1st Class" selected="">1st Class</option>
+                                            <select class="form-select" style="width: 118.656px;" id="selectMunicipalClass" name="municipalClass">
+                                                <option value="">Please Select</option>
+                                                <option value="1st Class">1st Class</option>
                                                 <option value="2nd Class">2nd Class</option>
                                                 <option value="3rd Class">3rd Class</option>
                                                 <option value="4th Class">4th Class</option>
@@ -186,9 +192,11 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 d-flex justify-content-end"><label class="col-form-label">Social Acceptability</label></div>
-                                        <div class="col" style="padding-right: 0px;padding-left: 0px;"><input class="form-control" type="text" style="width: 65.667px;"></div>
+                                        <div class="col" style="padding-right: 0px;padding-left: 0px;">
+                                            <input class="form-control" type="text" id="txtSocialAcceptability" name="socialAcceptability" style="width: 65.667px;" >
+                                        </div>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                             <div class="row" style="margin-top: 16px;margin-left: 0px;margin-right: 0px;">
                                 <div class="col-12 col-sm-12 col-md-12 col-xl-9 col-xxl-10" style="padding: 0px;width: 100%;">

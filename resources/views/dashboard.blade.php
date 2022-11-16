@@ -1,7 +1,7 @@
 @include('layouts.header')
 @include('layouts.navbar')
 <br>
-@include('dssData')
+@include($Page)
 
 @include('layouts.footer')
 
