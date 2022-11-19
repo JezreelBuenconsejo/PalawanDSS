@@ -24,6 +24,4 @@ Route::get('/dashboard', [dssController::class,'dataInput'])->middleware(['auth'
 
 Route::post("dssData",[dssController::class,'addData']);
 
-Route::get('dashboard/otherdata', function(){
-
-});
+Route::get('/decision', [dssController::class,'decision'])->middleware(['auth'])->name('dashboard');

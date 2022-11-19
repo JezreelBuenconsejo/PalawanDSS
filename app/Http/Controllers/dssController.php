@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\dssdata;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class dssController extends Controller
 {
+    //viewing what page in dashboard
     function dataInput(){
         $Page = "dssData";
         return view('dashboard',['Page' => $Page]);
     }
 
+    //add data
     function addData(Request $req){
         $userID = Auth::id();
         $dssdata = new dssdata;
@@ -39,9 +42,17 @@ class dssController extends Controller
         }
 
         $dssdata ->save();
-        return $req->input();
+        return redirect('/decision');
 
     }
 
+    //decision
+    public function decision(){
+        $user = Auth::id();
+        $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
+        $Page = "decision";
+        return view('dashboard',['Page' => $Page])->with(compact('dssData'));
+    }
 
 }
+
