@@ -22,6 +22,7 @@
                         {{ Auth::user()->name }} 
                     </a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ url('/result') }}">See Results</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"                                    
                         onclick="event.preventDefault();                                                     
                         document.getElementById('logout-form').submit();">
@@ -30,9 +31,6 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                        <a class="dropdown-item" href="#">Second Item</a>
-                        <a class="dropdown-item" href="#">Third Item</a>
-                        <a class="dropdown-item" href="#">Menu Item</a></div>
                 </li>
             </ul>
         </div>

@@ -166,6 +166,7 @@
                                         <div class="row">
                                             <div class="col-9 col-sm-6 col-xl-8 d-flex justify-content-end"><label class="col-form-label">DRW</label></div>
                                             <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblDRW" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
+                                            <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblRER" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
                                         </div>
                                     </div>
                                 </div>
@@ -173,6 +174,7 @@
                                     
                                 </div>
                                 <input id="txtDRW" name="DRW" hidden>
+                                <input id="txtRER" name="RER" hidden>
                                 <div class="col" id="otherData">
                                     <div class="row">
                                         <div class="col-xl-6 justify-content-center"><label class="col-form-label fs-5 fw-semibold" style="text-align: center;">Other Necessary Municipal Data</label></div>

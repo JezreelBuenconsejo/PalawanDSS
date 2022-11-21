@@ -44,6 +44,8 @@ $(document).ready(function(){
       $("#lblR1").text(R1);
       $("#lblR2").text(R2);
       $("#lblYears").text(yrs);
+      $("#lblRER").text(RER);
+      $("#txtRER").val(RER);
       $("#lblDRW").text(DRW);
       $("#txtDRW").val(DRW);
     });
