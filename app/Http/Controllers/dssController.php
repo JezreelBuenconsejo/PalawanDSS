@@ -74,7 +74,7 @@ class dssController extends Controller
             $time = $data->years;
             $date = $data->date_created;
         }
-        $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop);
+        $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw);
         
         $estimationTotal = $this->estimation($pop);
         $estimationPerCapita = $this->estimationPerCapita();
@@ -116,7 +116,7 @@ class dssController extends Controller
         $projectedRes = '';
         $projectedDRW = '';
 
-        for($i = $currentYear; $i <= $finalYear;$i++){
+        for($i = $currentYear; $i < $finalYear;$i++){
             $projectedPop = $projectedPop + ($projectedPop * ($gr/100));
             $projectedRes = ($projectedPop * $actualWastePerCapita) * $actualResidualPercentage;
             $projectedDRW = $projectedRes - ($projectedRes * ($rer/100));

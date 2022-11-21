@@ -57,12 +57,12 @@
                                 <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3"><input class="form-control" type="text" id="txtPopulation" required="" name="population"></div>
                             </div>
                             <div class="row form-group my-1 d-flex justify-content-center">
-                                <div class="col-5 col-sm-3 col-md-2 col-lg-3 col-xl-2"><label class="col-form-label d-flex justify-content-end">Growth Rate</label></div>
-                                <div class="col-5 col-sm-3 col-md-2 col-lg-3 col-xl-2"><input class="form-control" type="text" id="txtGrowthRate" required="" name="growthRate"></div>
+                                <div class="col-5 col-sm-3 col-md-2 col-lg-3 col-xl-2"><label class="col-form-label d-flex justify-content-end">Growth Rate </label></div>
+                                <div class="col-5 col-sm-3 col-md-2 col-lg-3 col-xl-2"><input class="form-control" type="text" id="txtGrowthRate" required="" name="growthRate" placeholder="%"></div>
                             </div>
                             <div class="row form-group my-1 d-flex justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3"><label class="col-form-label d-flex justify-content-end">Land Area</label></div>
-                                <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3"><input class="form-control" type="text" id="txtLandArea" required="" name="landArea"></div>
+                                <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3"><label class="col-form-label d-flex justify-content-end">Land Area </label></div>
+                                <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3"><input class="form-control" type="text" id="txtLandArea" required="" name="landArea" placeholder="ha."></div>
                             </div>
                             <span style="color: red; display:none;" id="notSmallIsland">Not Small Island (more than 50,000 ha)</span>
                             <div class="row">
@@ -76,11 +76,11 @@
                         <div id="form-content-1" class="multisteps-form__content">
                             <div class="row form-group my-1 d-flex justify-content-center">
                                 <div class="col-sm-7 col-md-5 col-lg-6 col-xl-5"><label class="col-form-label d-flex justify-content-center">Initial residual waste reduction rate&nbsp;</label></div>
-                                <div class="col-3 col-sm-2 col-md-2 col-xl-2"><input class="form-control" type="text" id="txtR1" required="" name="r1"></div>
+                                <div class="col-3 col-sm-2 col-md-2 col-xl-2"><input class="form-control" type="text" id="txtR1" required="" name="r1" placeholder="%"></div>
                             </div>
                             <div class="row form-group my-1 d-flex justify-content-center">
                                 <div class="col-sm-7 col-md-5 col-lg-6 col-xl-5"><label class="col-form-label d-flex justify-content-center">Final residual waste reduction rate</label></div>
-                                <div class="col-3 col-sm-2 col-md-2 col-xl-2"><input class="form-control" type="text" id="txtR2" required="" name="r2"></div>
+                                <div class="col-3 col-sm-2 col-md-2 col-xl-2"><input class="form-control" type="text" id="txtR2" required="" name="r2" placeholder="%"></div>
                             </div>
                             <div class="row form-group my-1 d-flex justify-content-center">
                                 <div class="col-1 col-sm-5 col-md-4 col-lg-4 col-xl-3 col-xxl-3"><label class="col-form-label"></label></div>
@@ -163,11 +163,7 @@
                                             <div class="col-9 col-sm-6 col-xl-8 d-flex justify-content-end"><label class="col-form-label">Years</label></div>
                                             <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblYears" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-9 col-sm-6 col-xl-8 d-flex justify-content-end"><label class="col-form-label">DRW</label></div>
-                                            <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblDRW" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
-                                            <div class="col" style="padding-right: 0px;padding-left: 0px;"><label class="col-form-label" id="lblRER" style="padding: 0;padding-top: 7px;padding-bottom: 7px;margin: 4px;margin-right: 0px;margin-left: 0px;">---</label></div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-9 col-md-10 col-xl-12">

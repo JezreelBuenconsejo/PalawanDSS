@@ -186,11 +186,11 @@
                         <tbody>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
-                                <td id="option1Bio">{{$res->Options->option1Bio}}</td>
+                                <td id="option1Bio">{{$res->Options->option1Bio}} KG/Day</td>
                             </tr>
                             <tr>
-                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
-                                <td id="option1Rec">{{$res->Options->option1Rec}}<br></td>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable KG/Day</td>
+                                <td id="option1Rec">{{$res->Options->option1Rec}} KG/Day<br></td>
                             </tr>
                             <tr></tr>
                             <tr></tr>
@@ -221,7 +221,7 @@
                 </div>
             </div>
             <div class="row text-center d-flex justify-content-center">
-                <div class="col-11 col-sm-11 col-md-4 col-lg-3 col-xxl-3">
+                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xxl-4">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -229,14 +229,17 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Current Population</td>
+                                    <td style="">Diverted Residual Waste</td>
+                                    <td id="growthRate">{{$res->CurrentData->drw}} KG/Day</td>
+                                </tr>
+                                <tr>
+                                    <td style="">Current Population</td>
                                     <td id="option2Bio-1">{{$res->CurrentData->pop}}<br /></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-right: 0px;padding-left: 0px;">Growth Rate</td>
+                                    <td style="">Growth Rate</td>
                                     <td id="growthRate">{{$res->CurrentData->gr}}%</td>
                                 </tr>
-                                <tr></tr>
                                 <tr></tr>
                             </tbody>
                         </table>
