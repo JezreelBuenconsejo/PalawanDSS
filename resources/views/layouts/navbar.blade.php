@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navcol-2">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ url('/') }}">Dashboard</a>
+                    <a class="nav-link active" href="{{ url('/dashboard') }}">Dashboard</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
