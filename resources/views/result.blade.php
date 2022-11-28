@@ -5,7 +5,7 @@
     <div class="container shadow" style="margin-bottom: 40px;">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 6px;">
-                <h4 id="mainResult">{{$res->Decision}}</h3>
+                <h4 id="mainResult">Ecology Center with Category {{$res->Decision}}</h3>
             </div>
         </div>
         <div class="row">

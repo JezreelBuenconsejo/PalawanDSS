@@ -8,6 +8,8 @@ use App\Models\benchmark;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\dssPredict;
 class dssController extends Controller
 {
     //viewing what page in dashboard
@@ -81,11 +83,14 @@ class dssController extends Controller
         
         $options = $this->options($bio,$rec,$estimationTotal['estimatedBio'],$estimationTotal['estimatedRec']);
 
-        $decision = $this->decision($drw);
+
+        $dssPredict = new dssPredict();
+
+        $decision = $dssPredict->predict($drw);
         
         $projection = $this->projection($total,$pop,$res,$date,$time,$gr,$rer);
 
-        $results = array('Total'=>$estimationTotal,'PerCapita'=>$estimationPerCapita,'Options'=>$options,'Decision'=>$decision,'Projection'=>$projection,'CurrentData'=>$currentData);
+        $results = array('Total'=>$estimationTotal,'PerCapita'=>$estimationPerCapita,'Options'=>$options,'Decision'=>$decision[0],'Projection'=>$projection,'CurrentData'=>$currentData);
         $resultsEncode = json_encode($results);
         $res = json_decode($resultsEncode);
 

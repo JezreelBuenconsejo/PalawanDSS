@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dssController;
-use App\Http\Controllers\dssPredict;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +28,4 @@ Route::get('/result', [dssController::class,'result'])->middleware(['auth'])->na
 
 Route::get('/records', [dssController::class,'records'])->middleware(['auth'])->name('dashboard');
 
-Route::get('/predict', [dssPredict::class,'predict'])->middleware(['auth'])->name('dashboard');
+//Route::get('/predict', [dssPredict::class,'predict'])->middleware(['auth'])->name('dashboard');
