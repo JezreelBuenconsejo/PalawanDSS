@@ -5,7 +5,9 @@
     <div class="container shadow" style="margin-bottom: 40px;">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 6px;">
-                <h4 id="mainResult">Ecology Center with Category {{$res->Decision}}</h3>
+                <h4 id="mainResult">Main Result: Ecology Center with Category {{$res->Decision}}</h4>
+                <h5 id="alternativeResult">{{$res->AlternativeDecision}}</h5>
+                <h6 id="comment" style="color: red">{{$res->Comments}}</h6>
             </div>
         </div>
         <div class="row">
@@ -27,7 +29,9 @@
     <div class="container shadow" style="margin-bottom: 20px;">
         <div class="row">
             <div class="col-md-12">
-                <h5 id="projectedResult">{{$res->Projection->projectedResult}} in {{$res->Projection->finalYear}} ({{$res->Projection->years}} years)</h5>
+                <h5 id="projectedResult">Ecology Center with Category {{$res->Projection->projectedResult}} in {{$res->Projection->finalYear}} ({{$res->Projection->years}} years)</h5>
+                <h6 id="projectedComment" style="color: red">{{$res->Projection->projectedComment}}</h6>
+            
             </div>
         </div>
         <div class="row">

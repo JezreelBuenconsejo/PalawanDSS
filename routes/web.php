@@ -25,6 +25,7 @@ Route::get('/dashboard', [dssController::class,'dataInput'])->middleware(['auth'
 Route::post("dssData",[dssController::class,'addData']);
 
 Route::get('/result', [dssController::class,'result'])->middleware(['auth'])->name('dashboard');
+Route::get('/SAMC', [dssController::class,'result'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/records', [dssController::class,'records'])->middleware(['auth'])->name('dashboard');
 

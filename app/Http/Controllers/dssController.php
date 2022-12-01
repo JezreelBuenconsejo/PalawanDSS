@@ -53,16 +53,19 @@ class dssController extends Controller
 
     //result
     public function result(){
+        //retrieve data in database
         $user = Auth::id();
         $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
 
+        //if no data available for the user
         if($dssData == []){
 
             $Page = "NoData"; 
             return view('dashboard',['Page' => $Page]);
         }
 
-        $bio = ''; $rec=''; $res = ''; $spe = ''; $total=''; $drw = ''; $rer = ''; $pop = ''; $gr = '';$date = '';
+        //retrieval of data
+        $bio = ''; $rec=''; $res = ''; $spe = ''; $total=''; $drw = ''; $rer = ''; $pop = ''; $gr = '';$date = '';$SA='';$MC='';
         foreach($dssData as $data){
             $bio = $data->biodegradable;
             $rec = $data->recyclable;
@@ -75,29 +78,45 @@ class dssController extends Controller
             $gr = $data->growth_rate;
             $time = $data->years;
             $date = $data->date_created;
+            $SA = $data->social_acceptability;
+            $MC = $data->municipal_classification;
         }
         $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw);
         
+        //estimation (for display purposes)
         $estimationTotal = $this->estimation($pop);
         $estimationPerCapita = $this->estimationPerCapita();
-        
+       
+        //option calculation
         $options = $this->options($bio,$rec,$estimationTotal['estimatedBio'],$estimationTotal['estimatedRec']);
 
-
+        //decision
+        $decision = array("MainDecision"=>'',"AlternativeDecision"=>' ',"Comments"=>' ');
         $dssPredict = new dssPredict();
+        $decision['MainDecision'] = $dssPredict->predict($drw);
 
-        $decision = $dssPredict->predict($drw);
-        
-        $projection = $this->projection($total,$pop,$res,$date,$time,$gr,$rer);
+        //comment
+        if($SA != NULL || $MC != NULL){
+        $Comment = $dssPredict->comment($SA,$MC);
+            if($Comment != 'No Comment'){
+                $decision['Comments'] = $Comment;
+                $decision['AlternativeDecision'] = "Alternative Decision: Ecology Center with Category 1A Special Containment Facility";
+            }
+        }
 
-        $results = array('Total'=>$estimationTotal,'PerCapita'=>$estimationPerCapita,'Options'=>$options,'Decision'=>$decision[0],'Projection'=>$projection,'CurrentData'=>$currentData);
+        //projection
+        $projection = $this->projection($total,$pop,$res,$date,$time,$gr,$rer,$SA,$MC);
+
+        //organizing results to display to the user
+        $results = array('Total'=>$estimationTotal,'PerCapita'=>$estimationPerCapita,'Options'=>$options,'Decision'=>$decision['MainDecision'][0],'AlternativeDecision'=>$decision['AlternativeDecision'],'Comments'=>$decision['Comments'][0],'Projection'=>$projection,'CurrentData'=>$currentData);
         $resultsEncode = json_encode($results);
         $res = json_decode($resultsEncode);
 
+        //forwarding to frontend
         $Page = "result"; 
         return view('dashboard',['Page' => $Page],['res'=>$res]); 
     }
-    public function decision($drw){
+    /*public function decision($drw){
         $decision = '';
         if($drw <= 4999){
             $decision = "Ecology Center with Category 1A Special Containment Facility";
@@ -109,8 +128,8 @@ class dssController extends Controller
             $decision = "Ecology Center with Category 2B Sanitary Landfill";
         }
         return $decision;
-    }
-    public function projection($total,$totalPop,$totalRes,$currentDate,$years,$gr,$rer){
+    }*/
+    public function projection($total,$totalPop,$totalRes,$currentDate,$years,$gr,$rer,$SA,$MC){
         $actualWastePerCapita = $total / $totalPop;
         $actualResidualPercentage = $totalRes / $total;
         $projectedPop = $totalPop; //initial Population
@@ -131,18 +150,23 @@ class dssController extends Controller
         $projectedRes = round($projectedRes,3);
         $projectedDRW = round($projectedDRW,3);
 
-        $projectedResult = '';
-        if($projectedDRW <= 4999){
-            $projectedResult = "Ecology Center with Category 1A Special Containment Facility";
-        }
-        else if($projectedDRW >= 5000 && $projectedDRW <= 15000){
-            $projectedResult = "Ecology Center with Category 1B Sanitary Landfill";
-        }
-        else{
-            $projectedResult = "Ecology Center with Category 2B Sanitary Landfill";
-        }
+        $projectedDecision = array("MainDecision"=>'',"AlternativeDecision"=>' ',"Comments"=>' ');
+        $dssPredict = new dssPredict();
+        $projectedDecision['MainDecision'] = $dssPredict->predict($projectedDRW);
 
-        $projection = array('projectedResult'=>$projectedResult,'finalYear'=>$finalYear,'years'=>$years,'projectedPopulation'=>$projectedPop,'projectedRes'=>$projectedRes,'projectedDRW'=>$projectedDRW);
+        if($projectedDecision['MainDecision'][0] != '1A Special Containment Facility'){
+            if($SA != NULL || $MC != NULL){
+                $projectedComment = $dssPredict->comment($SA,$MC);
+                if($projectedComment != 'No Comment'){
+                    $projectedDecision['Comments'] = $projectedComment;
+                }
+            }
+            else{
+                $projectedDecision['Comments'] = array("Must conduct Social Acceptability Study and Municipality should be atleast 2nd Class Municipality");
+            }
+        }
+        
+        $projection = array('projectedResult'=>$projectedDecision['MainDecision'][0],'projectedComment'=>$projectedDecision['Comments'][0],'finalYear'=>$finalYear,'years'=>$years,'projectedPopulation'=>$projectedPop,'projectedRes'=>$projectedRes,'projectedDRW'=>$projectedDRW);
 
         return $projection;
     }

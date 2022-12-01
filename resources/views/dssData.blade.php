@@ -180,12 +180,12 @@
                                         <div class="col-5 col-xl-8 col-form-label" style="padding-right: 0px;padding-left: 0px;padding-top: 0px;padding-bottom: 0px;">
                                             <select class="form-select" style="width: 118.656px;" id="selectMunicipalClass" name="municipalClass">
                                                 <option value="">Please Select</option>
-                                                <option value="1st Class">1st Class</option>
-                                                <option value="2nd Class">2nd Class</option>
-                                                <option value="3rd Class">3rd Class</option>
-                                                <option value="4th Class">4th Class</option>
-                                                <option value="5th Class">5th Class</option>
-                                                <option value="6th Class">6th Class</option>
+                                                <option value="1">1st Class</option>
+                                                <option value="2">2nd Class</option>
+                                                <option value="3">3rd Class</option>
+                                                <option value="4">4th Class</option>
+                                                <option value="5">5th Class</option>
+                                                <option value="6">6th Class</option>
                                             </select></div>
                                     </div>
                                     <div class="row">
