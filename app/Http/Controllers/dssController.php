@@ -61,14 +61,14 @@ class dssController extends Controller
         $options = $this->options($bio,$rec,$estimationTotal['estimatedBio'],$estimationTotal['estimatedRec']);
 
         //decision
-        $decision = array("MainDecision"=>' ',"AlternativeDecision"=>'N/A',"Comments"=>' ');
+        $decision = array("MainDecision"=>' ',"AlternativeDecision"=>' ',"Comments"=>' ');
         $dssPredict = new dssPredict();
         $decision['MainDecision'] = $dssPredict->predict($drw);
 
         //comment
         if($SA != NULL || $MC != NULL){
         $Comment = $dssPredict->comment($SA,$MC);
-            if($Comment != 'No Comment'){
+            if($Comment[0] != 'No Comment'){
                 $decision['Comments'] = $Comment;
                 $decision['AlternativeDecision'] = "Ecology Center with Category 1A Special Containment Facility";
             }
@@ -133,7 +133,7 @@ class dssController extends Controller
         if($projectedDecision['MainDecision'][0] != '1A Special Containment Facility'){
             if($SA != NULL || $MC != NULL){
                 $projectedComment = $dssPredict->comment($SA,$MC);
-                if($projectedComment != 'No Comment'){
+                if($projectedComment[0] != 'No Comment'){
                     $projectedDecision['Comments'] = $projectedComment;
                 }
             }
