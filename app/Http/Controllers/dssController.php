@@ -72,9 +72,6 @@ class dssController extends Controller
                 $decision['Comments'] = $Comment;
                 $decision['AlternativeDecision'] = "Ecology Center with Category 1A Special Containment Facility";
             }
-            else if($Comment == 'No Comment'){
-                $decision['Comments'] = $Comment;
-            }
         }
 
         //projection

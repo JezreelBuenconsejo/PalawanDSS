@@ -56,7 +56,7 @@ class postDataController extends Controller
         $dssdata->Option1Rec = $req->Options->option1Rec;
         $dssdata->Option2Bio = $req->Options->option2Bio;
         $dssdata->Option2Rec = $req->Options->option2Rec;
-        $dssdata->comment = $req->Decision->Comments;
+        $dssdata->comment = $req->Decision->Comments[0];
         $dssdata->userID = $req->UID;
         $dssdata->date_created = $date;
         

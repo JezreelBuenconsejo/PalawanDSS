@@ -13,16 +13,17 @@ class viewData extends Controller
     function whatToView(){
         $user = Auth::id();
         $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
-
+        $Page = "dssData";
+        return view('dashboard',['Page' => $Page]);
         //if no data available for the user
-        if($dssData == []){
+        /*if($dssData == []){
             $Page = "dssData";
             return view('dashboard',['Page' => $Page]);
         }
         else{
             $Page = "monitoringPage";
             return view('dashboard',['Page' => $Page]);
-        }
+        }*/
     }
 
     function viewResults(){
