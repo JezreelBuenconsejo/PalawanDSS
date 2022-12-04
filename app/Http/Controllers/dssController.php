@@ -10,46 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\dssPredict;
+use App\Http\Controllers\postDataController;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
+
 class dssController extends Controller
 {
-    //viewing what page in dashboard
-    function dataInput(){
-        $Page = "dssData";
-        return view('dashboard',['Page' => $Page]);
-    }
-
-    //add data
-    function addData(Request $req){
-        $userID = Auth::id();
-        $dssdata = new dssdata;
-        $dssdata ->email=$req->email;
-        $dssdata ->user_id=$userID;
-        $dssdata ->biodegradable=$req->biodegradable;
-        $dssdata ->recyclable=$req->recyclable;
-        $dssdata ->residual=$req->residual;
-        $dssdata ->special=$req->special;
-        $dssdata ->total_waste=$req->totalWaste;
-        $dssdata ->population=$req->population;
-        $dssdata ->growth_rate=$req->growthRate;
-        $dssdata ->land_area=$req->landArea;
-        $dssdata ->r1=$req->r1;
-        $dssdata ->r2=$req->r2;
-        $dssdata ->reduction_efficiency_rating=$req->RER;
-        $dssdata ->years=$req->years;
-        $dssdata ->diverted_residual_waste=$req->DRW;
-
-        $MunicipalClass = $req->municipalClass;
-        $SocialAcceptability = $req->socialAcceptability;
-
-        if($MunicipalClass != null || $MunicipalClass = ""){
-            $dssdata ->municipal_classification=$MunicipalClass;
-            $dssdata ->social_acceptability=$SocialAcceptability;
-        }
-
-        $dssdata ->save();
-        return redirect('/result');
-
-    }
+    
 
     //result
     public function result(){
@@ -66,6 +32,8 @@ class dssController extends Controller
 
         //retrieval of data
         $bio = ''; $rec=''; $res = ''; $spe = ''; $total=''; $drw = ''; $rer = ''; $pop = ''; $gr = '';$date = '';$SA='';$MC='';
+        $dataID = '';
+        $userID = '';
         foreach($dssData as $data){
             $bio = $data->biodegradable;
             $rec = $data->recyclable;
@@ -80,8 +48,10 @@ class dssController extends Controller
             $date = $data->date_created;
             $SA = $data->social_acceptability;
             $MC = $data->municipal_classification;
+            $userID = $data->user_id;
+            $dataID = $data->dataID;
         }
-        $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw);
+        $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw,'date'=>$date);
         
         //estimation (for display purposes)
         $estimationTotal = $this->estimation($pop);
@@ -91,7 +61,7 @@ class dssController extends Controller
         $options = $this->options($bio,$rec,$estimationTotal['estimatedBio'],$estimationTotal['estimatedRec']);
 
         //decision
-        $decision = array("MainDecision"=>'',"AlternativeDecision"=>' ',"Comments"=>' ');
+        $decision = array("MainDecision"=>' ',"AlternativeDecision"=>'N/A',"Comments"=>' ');
         $dssPredict = new dssPredict();
         $decision['MainDecision'] = $dssPredict->predict($drw);
 
@@ -100,21 +70,28 @@ class dssController extends Controller
         $Comment = $dssPredict->comment($SA,$MC);
             if($Comment != 'No Comment'){
                 $decision['Comments'] = $Comment;
-                $decision['AlternativeDecision'] = "Alternative Decision: Ecology Center with Category 1A Special Containment Facility";
+                $decision['AlternativeDecision'] = "Ecology Center with Category 1A Special Containment Facility";
+            }
+            else if($Comment == 'No Comment'){
+                $decision['Comments'] = $Comment;
             }
         }
 
         //projection
         $projection = $this->projection($total,$pop,$res,$date,$time,$gr,$rer,$SA,$MC);
 
-        //organizing results to display to the user
-        $results = array('Total'=>$estimationTotal,'PerCapita'=>$estimationPerCapita,'Options'=>$options,'Decision'=>$decision['MainDecision'][0],'AlternativeDecision'=>$decision['AlternativeDecision'],'Comments'=>$decision['Comments'][0],'Projection'=>$projection,'CurrentData'=>$currentData);
+        //organizing results to add to DB and display to the user
+        $results = array("UID"=>$userID,"DID"=>$dataID,'Options'=>$options,"Decision"=>$decision,'Projection'=>$projection,'CurrentData'=>$currentData);
+
         $resultsEncode = json_encode($results);
         $res = json_decode($resultsEncode);
 
+        //adding to database
+        (new postDataController)->addResults($res);
+        (new postDataController)->addProjections($res);
+
         //forwarding to frontend
-        $Page = "result"; 
-        return view('dashboard',['Page' => $Page],['res'=>$res]); 
+        return redirect('/result');
     }
     /*public function decision($drw){
         $decision = '';
@@ -136,7 +113,9 @@ class dssController extends Controller
         $date = new Carbon($currentDate);
         $currentYear = $date->year;
         $finalYear = $currentYear + $years;
-
+        $finalDate = $date->addYear($years);
+        $finalDate = date('Y-m-d H:i:s');
+        
         $projectedRes = '';
         $projectedDRW = '';
 
@@ -166,7 +145,7 @@ class dssController extends Controller
             }
         }
         
-        $projection = array('projectedResult'=>$projectedDecision['MainDecision'][0],'projectedComment'=>$projectedDecision['Comments'][0],'finalYear'=>$finalYear,'years'=>$years,'projectedPopulation'=>$projectedPop,'projectedRes'=>$projectedRes,'projectedDRW'=>$projectedDRW);
+        $projection = array('projectedResult'=>$projectedDecision['MainDecision'][0],'projectedComment'=>$projectedDecision['Comments'][0],'finalYear'=>$finalYear,'years'=>$years,'projectedPopulation'=>$projectedPop,'projectedRes'=>$projectedRes,'projectedDRW'=>$projectedDRW,'finalDate'=>$finalDate);
 
         return $projection;
     }

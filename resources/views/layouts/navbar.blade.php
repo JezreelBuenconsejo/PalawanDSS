@@ -1,6 +1,3 @@
-
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
 <nav class="navbar navbar-light navbar-expand-md py-3" style="background-color: rgb(171, 245, 171)">
     <div class="container" style="margin-left:2%">
             <img src="/picture/PalawanSeal.png" style="height: 70px; width: 70px;">

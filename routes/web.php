@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dssController;
+use App\Http\Controllers\postDataController;
+use App\Http\Controllers\viewData;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +20,20 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+Route::get('/monitoringPage', function () {
+    $Page = "monitoringPage"; 
+        return view('dashboard',['Page' => $Page]); 
+});
+
 Auth::routes();
 
-Route::get('/dashboard', [dssController::class,'dataInput'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [viewData::class,'whatToView'])->middleware(['auth'])->name('dashboard');
 
-Route::post("dssData",[dssController::class,'addData']);
+Route::post("dssData",[postDataController::class,'addData']);
 
-Route::get('/result', [dssController::class,'result'])->middleware(['auth'])->name('dashboard');
-Route::get('/SAMC', [dssController::class,'result'])->middleware(['auth'])->name('dashboard');
+Route::get('/decision', [dssController::class,'result'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/result', [viewData::class,'viewResults'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/records', [dssController::class,'records'])->middleware(['auth'])->name('dashboard');
 

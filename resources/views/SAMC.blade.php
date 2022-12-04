@@ -1,1 +1,0 @@
-Social Acceptability: {{$res}} <br>

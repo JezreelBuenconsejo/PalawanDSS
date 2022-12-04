@@ -1,55 +1,55 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/assets/js/result.js"></script>
-<h2 class="text-center" style="margin: 8px;">Results</h2>
-    <div class="container shadow" style="margin-bottom: 40px;">
+<h2 class="text-center text-uppercase text-primary fw-bold" style="margin: 8px; font-family: Nunito, sans-serif;">Results</h2>
+    <div class="container card shadow border-start-primary py-2 text-dark" style="margin-bottom: 40px; font-family: Nunito, sans-serif;">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 6px;">
-                <h4 id="mainResult">Main Result: Ecology Center with Category {{$res->Decision}}</h4>
-                <h5 id="alternativeResult">{{$res->AlternativeDecision}}</h5>
-                <h6 id="comment" style="color: red">{{$res->Comments}}</h6>
+                <h4 id="mainResult">Main Result: Ecology Center with Category {{$res->DSSResults->mainRes}}</h4>
+                <h5 id="alternativeResult">{{$res->DSSResults->altRes}}</h5>
+                <h6 id="comment" style="color: red">{{$res->DSSResults->comment}}</h6>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 12px;">
                 <h5 id="option1">Option 1: Collect 50% (amount in KG/Day)</h5>
-                <h6 id="option1Bio">Biodegradable: {{$res->Options->option1Bio}}</h6>
-                <h6 id="option1Rec">Recyclable: {{$res->Options->option1Rec}}</h6>
+                <h6 id="option1Bio">Biodegradable: {{$res->DSSResults->op1Bio}}</h6>
+                <h6 id="option1Rec">Recyclable: {{$res->DSSResults->op1Rec}}</h6>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h5 id="option1">Option 2: Collect in excess of the estimation (amount in KG/Day)</h5>
-                <h6 id="option2Bio">Biodegradable: {{$res->Options->option2Bio}}</h6>
-                <h6 id="option2Rec">Recyclable: {{$res->Options->option2Rec}}</h6>
+                <h6 id="option2Bio">Biodegradable: {{$res->DSSResults->op2Bio}}</h6>
+                <h6 id="option2Rec">Recyclable: {{$res->DSSResults->op2Rec}}</h6>
             </div>
         </div>
     </div>
-    <h3 class="text-center" style="margin: 8px;">Projections</h3>
-    <div class="container shadow" style="margin-bottom: 20px;">
+    <h3 class="text-center text-uppercase fw-bold" style="margin: 8px; color:rgb(28,200,138);font-family: Nunito, sans-serif;">Projections</h3>
+    <div class="container card shadow border-start-primary py-2 text-dark" style="margin-bottom: 20px; font-family: Nunito, sans-serif;">
         <div class="row">
             <div class="col-md-12">
-                <h5 id="projectedResult">Ecology Center with Category {{$res->Projection->projectedResult}} in {{$res->Projection->finalYear}} ({{$res->Projection->years}} years)</h5>
-                <h6 id="projectedComment" style="color: red">{{$res->Projection->projectedComment}}</h6>
+                <h5 id="projectedResult">Ecology Center with Category {{$res->projections->projectedResult}} in {{$res->projections->finalYear}} ({{$res->DSSResults->time}} years)</h5>
+                <h6 id="projectedComment" style="color: red">{{$res->projections->projectedComments}}</h6>
             
             </div>
         </div>
         <div class="row">
             <div class="col-md-12" id="projectedPopulation">
-                <h6>Projected Population: {{$res->Projection->projectedPopulation}}</h6>
+                <h6>Projected Population: {{$res->projections->projectedPop}}</h6>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h6 id="projectedRes">Projected Residual Waste: {{$res->Projection->projectedRes}} KG/Day</h6>
-                <h6 id="projectedDRW">Projected Diverted Residual Waste: {{$res->Projection->projectedDRW}} KG/Day</h6>
+                <h6 id="projectedRes">Projected Residual Waste: {{$res->projections->projectedRes}} KG/Day</h6>
+                <h6 id="projectedDRW">Projected Diverted Residual Waste: {{$res->projections->projectedDRW}} KG/Day</h6>
             </div>
         </div>
     </div>
-    <div class="container shadow" id="details" style="margin-top: 20px;">
+    <div class="container card shadow border-start-primary py-2 small fw-bold" id="details" style="margin-top: 20px; color: rgb(133,135,150);font-family: Nunito, sans-serif;">
         <div class="row">
             <div class="col">
-                <h4 class="text-center">Details</h4>
+                <h4 class="text-center fw-bold" style="color: #36b9cc;font-family: Nunito, sans-serif;">Details</h4>
             </div>
         </div>
         <div class="row text-center justify-content-center">
@@ -125,23 +125,23 @@
                         <tbody>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
-                                <td id="estimatedTotalBio">{{$res->Total->estimatedBio}}</td>
+                                <td id="estimatedTotalBio">{{$res->estimationTotal->estimatedBio}}</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
-                                <td id="estimatedTotalRec">{{$res->Total->estimatedRec}}</td>
+                                <td id="estimatedTotalRec">{{$res->estimationTotal->estimatedRec}}</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Residual</td>
-                                <td id="estimatedTotalRes">{{$res->Total->estimatedRes}}</td>
+                                <td id="estimatedTotalRes">{{$res->estimationTotal->estimatedRes}}</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Special</td>
-                                <td id="estimatedTotalSpe">{{$res->Total->estimatedSpe}}</td>
+                                <td id="estimatedTotalSpe">{{$res->estimationTotal->estimatedSpe}}</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2">Total</td>
-                                <td id="estimatedTotal">{{$res->Total->estimatedTotal}}</td>
+                                <td id="estimatedTotal">{{$res->estimationTotal->estimatedTotal}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -158,23 +158,23 @@
                         <tbody>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
-                                <td id="estimatedPerCapBio">{{$res->PerCapita->perCapitaBio}} ({{$res->PerCapita->percentBio}}%)</td>
+                                <td id="estimatedPerCapBio">{{$res->estimationPerCapita->perCapitaBio}} ({{$res->estimationPerCapita->percentBio}}%)</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
-                                <td id="estimatedPerCapRec">{{$res->PerCapita->perCapitaRec}} ({{$res->PerCapita->percentRec}}%)</td>
+                                <td id="estimatedPerCapRec">{{$res->estimationPerCapita->perCapitaRec}} ({{$res->estimationPerCapita->percentRec}}%)</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Residual</td>
-                                <td id="estimatedPerCapRes">{{$res->PerCapita->perCapitaRes}} ({{$res->PerCapita->percentRes}}%)</td>
+                                <td id="estimatedPerCapRes">{{$res->estimationPerCapita->perCapitaRes}} ({{$res->estimationPerCapita->percentRes}}%)</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Special</td>
-                                <td id="estimatedPerCapSpe">{{$res->PerCapita->perCapitaSpe}} ({{$res->PerCapita->percentSpe}}%)</td>
+                                <td id="estimatedPerCapSpe">{{$res->estimationPerCapita->perCapitaSpe}} ({{$res->estimationPerCapita->percentSpe}}%)</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2">Total</td>
-                                <td id="estimatedPerCapTotal">{{$res->PerCapita->perCapitaTotal}} (100%)</td>
+                                <td id="estimatedPerCapTotal">{{$res->estimationPerCapita->perCapitaTotal}} (100%)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -190,11 +190,11 @@
                         <tbody>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
-                                <td id="option1Bio">{{$res->Options->option1Bio}} KG/Day</td>
+                                <td id="option1Bio">{{$res->DSSResults->op1Bio}} KG/Day</td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable KG/Day</td>
-                                <td id="option1Rec">{{$res->Options->option1Rec}} KG/Day<br></td>
+                                <td id="option1Rec">{{$res->DSSResults->op1Rec}} KG/Day<br></td>
                             </tr>
                             <tr></tr>
                             <tr></tr>
@@ -212,11 +212,11 @@
                         <tbody>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
-                                <td id="option2Bio">{{$res->Options->option2Bio}}<br></td>
+                                <td id="option2Bio">{{$res->DSSResults->op2Bio}}<br></td>
                             </tr>
                             <tr>
                                 <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
-                                <td id="option2Rec">{{$res->Options->option2Rec}}</td>
+                                <td id="option2Rec">{{$res->DSSResults->op2Rec}}</td>
                             </tr>
                             <tr></tr>
                             <tr></tr>
