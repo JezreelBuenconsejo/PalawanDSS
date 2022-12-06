@@ -20,14 +20,11 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
-Route::get('/monitoringPage', function () {
-    $Page = "monitoringPage"; 
-        return view('dashboard',['Page' => $Page]); 
-});
-
 Auth::routes();
 
 Route::get('/dashboard', [viewData::class,'whatToView'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/monitoringPage',  [viewData::class,'viewMonitoringPage'])->middleware(['auth'])->name('dashboard'); 
 
 Route::post("dssData",[postDataController::class,'addData']);
 

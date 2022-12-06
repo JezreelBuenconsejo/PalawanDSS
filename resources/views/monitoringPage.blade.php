@@ -12,7 +12,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col">
                                         <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>main result</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>$40,000</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span>{{$res->mainRes}}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col">
                                         <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>projected result</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>$215,000</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span>{}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -38,15 +38,15 @@
                                         <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Progress</span></div>
                                         <div class="row g-0 align-items-center d-flex justify-content-center">
                                             <div class="col-auto">
-                                                <div class="text-dark fw-bold h5 mb-0 me-2"><span>50%</span></div>
+                                                <div class="text-dark fw-bold h5 mb-0 me-2"><span>{{$res->startYear}}</span></div>
                                             </div>
                                             <div class="col-7 col-sm-9 col-md-8 col-lg-10 col-xl-9 col-xxl-10">
                                                 <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="visually-hidden">50%</span></div>
+                                                    <div class="progress-bar bg-info" aria-valuenow="{}" aria-valuemin="0" aria-valuemax="100" style="width: {}%;"><span class="visually-hidden">50%</span></div>
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <div class="text-dark fw-bold h5 mb-0 ms-2"><span>50%</span></div>
+                                                <div class="text-dark fw-bold h5 mb-0 ms-2"><span>{}</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                     <div class="col-lg-12 col-xl-12">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Earnings Overview</h6>
+                                <h6 class="text-primary fw-bold m-0">Residual and Projected Residual Waste</h6>
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                                         <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
@@ -68,12 +68,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                <div class="chart-area"><canvas id='residualWaste'></canvas></div>
                             </div>
                         </div>
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Earnings Overview</h6>
+                                <h6 class="text-primary fw-bold m-0">Projected Population</h6>
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                                         <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
@@ -82,14 +82,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                <div class="chart-area"><canvas id="projectedPopulation"></canvas></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-7 col-xl-8">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Earnings Overview</h6>
+                                <h6 class="text-primary fw-bold m-0">Projected Total Waste</h6>
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"></button>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                                         <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                <div class="chart-area"><canvas id="projectedWaste"></canvas></div>
                             </div>
                         </div>
                     </div>
@@ -126,8 +126,199 @@
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Brand 2022</span></div>
+                <div class="text-center my-auto copyright"><span>Copyright © Palawan DSS 2022</span></div>
             </div>
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+<script>
+    const residual = [{label: "Feb-2022", res: "20"}, {label: "May-2025", res: "45"},{label: "Oct-2032", res: "94"}]; 
+    const DRW = [{label: "Feb-2022", DRW: "1"}, {label: "May-2025", DRW: "40"},{label: "Oct-2032", DRW: "76"}];
+
+    new Chart("residualWaste", {
+      type: 'line',
+      data: {
+        datasets: [{
+            label: "Residual Waste",
+            fill: false,
+            data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
+            backgroundColor:'rgba(78, 115, 223, 1)',
+            borderColor:'rgba(78, 115, 223, 1)'
+          },{
+            label: "Diverted Residual Waste",
+            fill: false,
+            data: DRW.map(o => ({ x: o.label, y: Number(o.DRW)})),
+            backgroundColor:'rgba(255,0,0,0.64)',
+            borderColor:'rgba(255,0,0,0.64)'
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio:false,
+                legend:{
+                    labels:{
+                        fontStyle:'normal'
+                    }
+                },
+                title:{
+                    fontStyle:'normal'
+                },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }],
+          xAxes: [{
+            type: 'time',
+            ticks: {
+              maxTicksLimit: 3
+                },
+            time: {
+              parser: 'MMM-YYYY',
+              unit: 'year',
+              displayFormats: {
+                 year: 'YYYY'
+              }
+            }
+          }]
+        }
+      }
+    });
+    
+    new Chart("projectedWaste", {
+      type: 'line',
+      data: {
+        datasets: [{
+            label: "Population",
+            fill: false,
+            data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
+            backgroundColor:'rgba(78, 115, 223, 1)',
+            borderColor:'rgba(78, 115, 223, 1)'
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio:false,
+                legend:{
+                    display: false,
+                    labels:{
+                        fontStyle:'normal'
+                    }
+                },
+                title:{
+                    fontStyle:'normal'
+                },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }],
+          xAxes: [{
+            type: 'time',
+            ticks: {
+              maxTicksLimit: 3
+                },
+            time: {
+              parser: 'MMM-YYYY',
+              unit: 'year',
+              displayFormats: {
+                 year: 'YYYY'
+              }
+            }
+          }]
+        }
+      }
+    });
+
+    new Chart("projectedPopulation", {
+      type: 'line',
+      data: {
+        datasets: [{
+            label: "Population",
+            fill: false,
+            data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
+            backgroundColor:'rgba(78, 115, 223, 1)',
+            borderColor:'rgba(78, 115, 223, 1)'
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio:false,
+                legend:{
+                    display: false,
+                    labels:{
+                        fontStyle:'normal'
+                    }
+                },
+                title:{
+                    fontStyle:'normal'
+                },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }],
+          xAxes: [{
+            type: 'time',
+            ticks: {
+              maxTicksLimit: 3
+                },
+            time: {
+              parser: 'MMM-YYYY',
+              unit: 'year',
+              displayFormats: {
+                 year: 'YYYY'
+              }
+            }
+          }]
+        }
+      }
+    });
+    /*const ctx = document.getElementById('myChart');
+
+new Chart(ctx, 
+    {
+        type:'line',
+        data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],
+            datasets:[{
+                label:'Earnings',
+                fill:true,
+                data:[0,10000,1232,15000,10000,20000,15000,25000],
+                backgroundColor:'rgba(78, 115, 223, 0.05)',
+                borderColor:'rgba(78, 115, 223, 1)'
+            }]
+        },
+        options:{
+            maintainAspectRatio:false,
+            legend:{
+                display:false,
+                labels:{
+                    fontStyle:'normal'
+                }
+            },
+            title:{
+                fontStyle:'normal'
+            },
+            tooltips: {
+       filter: function (tooltipItem, data) {
+           var label = data.labels[tooltipItem.index];
+           if (label == "Feb") {
+             return false;
+           } else {
+             return true;
+           }
+       }
+    },
+            scales: {
+      xAxes: [{
+        ticks: {
+          maxTicksLimit: 1
+            }
+        }]
+        }
+        }
+    });*/
+</script>

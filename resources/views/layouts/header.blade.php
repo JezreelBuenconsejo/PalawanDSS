@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
 
+    
+    <script src="assets/js/chart.min.js"></script>
     <!-- Scripts -->
     <!--@vite(['resources/sass/app.scss', 'resources/js/app.js'])-->
 </head>

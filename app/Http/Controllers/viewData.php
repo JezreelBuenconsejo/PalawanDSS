@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -13,17 +14,16 @@ class viewData extends Controller
     function whatToView(){
         $user = Auth::id();
         $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
-        $Page = "dssData";
-        return view('dashboard',['Page' => $Page]);
+        /*$Page = "dssData";
+        return view('dashboard',['Page' => $Page]);*/
         //if no data available for the user
-        /*if($dssData == []){
+        if($dssData == []){
             $Page = "dssData";
             return view('dashboard',['Page' => $Page]);
         }
         else{
-            $Page = "monitoringPage";
-            return view('dashboard',['Page' => $Page]);
-        }*/
+            return redirect('/monitoringPage');
+        }
     }
 
     function viewResults(){
@@ -134,5 +134,23 @@ class viewData extends Controller
 
         $perCapita = array('perCapitaBio'=>$perCapitaBio,'percentBio'=>$benchBio,'perCapitaRec'=>$perCapitaRec,'percentRec'=>$benchRec,'perCapitaRes'=>$perCapitaRes,'percentRes'=>$benchRes,'perCapitaSpe'=>$perCapitaSpe,'percentSpe'=>$benchSpe,'perCapitaTotal'=>$benchTotal);
         return $perCapita;
+    }
+
+    function viewMonitoringPage(){
+        $user = Auth::id();
+        $dssResults = DB::select('SELECT * FROM `results` WHERE userID = :user ORDER by date_created DESC limit 1',array('user'=>$user));
+        $mainRes = ''; $altRes = ''; $op1Bio = ''; $op1Rec = ''; $op2Bio = ''; $op2Rec = ''; $comment = ''; $dateCreated = '';
+        foreach($dssResults as $data){
+            $mainRes = $data->MainResult;
+            $dateCreated = $data->date_created;
+        }
+        $date = new Carbon($dateCreated);
+        $year = $date->year;
+        $mainResult = array("mainRes" => "Ecology Center with Category ".$mainRes, "startYear"=> $year);
+        
+        $resultsEncode = json_encode($mainResult);
+        $res = json_decode($resultsEncode);
+        $Page = "monitoringPage";
+        return view('dashboard', ['Page' => $Page], ['res' => $res]);
     }
 }
