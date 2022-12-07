@@ -25,7 +25,6 @@ class dssController extends Controller
 
         //if no data available for the user
         if($dssData == []){
-
             $Page = "NoData"; 
             return view('dashboard',['Page' => $Page]);
         }

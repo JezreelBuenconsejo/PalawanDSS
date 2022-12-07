@@ -54,7 +54,7 @@ class viewData extends Controller
             $SA = $data->social_acceptability;
             $MC = $data->municipal_classification;
         }
-        $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw,'date'=>$date);
+        $currentData = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw,'date'=>$date,'time'=>$time);
         
         $dssResults = DB::select('SELECT * FROM `results` WHERE userID = :user ORDER by date_created DESC limit 1',array('user'=>$user));
         $mainRes = ''; $altRes = ''; $op1Bio = ''; $op1Rec = ''; $op2Bio = ''; $op2Rec = ''; $comment = ''; $dateCreated = '';
@@ -136,21 +136,132 @@ class viewData extends Controller
         return $perCapita;
     }
 
+    //view and calculate data to be shown in Monitoring Page
     function viewMonitoringPage(){
         $user = Auth::id();
+
+        //initial data
+        $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
+        $bio = ''; $rec=''; $res = ''; $spe = ''; $total=''; $drw = ''; $rer = ''; $pop = ''; $gr = '';$date = '';$time = '';$SA='';$MC='';
+        foreach($dssData as $data){
+            $bio = $data->biodegradable;
+            $rec = $data->recyclable;
+            $res = $data->residual;
+            $spe = $data->special;
+            $total = $data->total_waste;
+            $drw = $data->diverted_residual_waste;
+            $rer = $data->reduction_efficiency_rating;
+            $time = $data->years;
+            $pop = $data->population;
+            $gr = $data->growth_rate;
+            $date = $data->date_created;
+            $SA = $data->social_acceptability;
+            $MC = $data->municipal_classification;
+        }
+        $initialInput = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw,'date'=>$date,'time'=>$time);
+        
+
+        //inital results
         $dssResults = DB::select('SELECT * FROM `results` WHERE userID = :user ORDER by date_created DESC limit 1',array('user'=>$user));
         $mainRes = ''; $altRes = ''; $op1Bio = ''; $op1Rec = ''; $op2Bio = ''; $op2Rec = ''; $comment = ''; $dateCreated = '';
         foreach($dssResults as $data){
             $mainRes = $data->MainResult;
             $dateCreated = $data->date_created;
         }
-        $date = new Carbon($dateCreated);
-        $year = $date->year;
-        $mainResult = array("mainRes" => "Ecology Center with Category ".$mainRes, "startYear"=> $year);
+        $dateCreated = new Carbon($dateCreated);
+        $startYear = $dateCreated->year;
         
-        $resultsEncode = json_encode($mainResult);
+        $initialResult = array("mainRes" =>"Category ". $mainRes, "startYear" => $startYear);
+
+        //projected results
+        $dssProjections = DB::select('SELECT * FROM `projection` WHERE userID = :user ORDER by start_date DESC limit 1',array('user'=>$user));
+        $projectedResult = '';$projectedPop = '';$projectedRes = '';$projectedDRW = '';$startDate = '';$finalDate = ''; $finalYear = ''; $projectedComments = '';
+        foreach($dssProjections as $data){
+            $projectedResult = $data->projected_result;
+            $projectedPop = $data->projected_population;
+            $projectedRes = $data->projected_residual_waste;
+            $projectedDRW = $data->projected_DRW;
+            $finalDate = $data->finalDate;
+            $finalYear = $data->finalYear;
+        }
+        $projections = array("projectedResult"=>"Category ".$projectedResult,"projectedPop"=>$projectedPop,"projectedRes"=>$projectedRes,"projectedDRW"=>$projectedDRW,"finalYear"=>$finalYear);
+
+        //progress bar
+        $curYear = date('Y');
+        $totalYear = $finalYear - $startYear;
+        $yrspassed = $curYear - $startYear;
+        $percent = ($yrspassed / $totalYear) * 100;
+
+        //Date parsing for line chart
+        //initial year
+        $startMonth = $dateCreated->format("M");
+        $initialDate = $startMonth . "-" . $startYear;
+        //final year
+        $finalDate = new Carbon($finalDate);
+        $finalMonth = $finalDate->format("M");
+        $finalD = $finalMonth . '-' . $finalYear;
+        //current year
+        $currentMonth = date("M");
+        $currentYear = date("Y");
+        $currentDate = $currentMonth . '-' . $currentYear;
+
+        $dates = array("initialDate" => $initialDate,"finalDate"=>$finalD,"currentDate"=>$currentDate);
+
+        $currentProjections = $this->current_projections($total,$res,$pop,$gr,$rer,$dateCreated);
+
+        $result = array("initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections);
+        
+        $resultsEncode = json_encode($result);
         $res = json_decode($resultsEncode);
         $Page = "monitoringPage";
         return view('dashboard', ['Page' => $Page], ['res' => $res]);
     }
+
+    function current_projections($totalWaste,$residual,$pop,$gr,$rer,$initialDate){
+        $intInitialMonth = $initialDate->format('n'); // 12
+        $intInitialYear = $initialDate->format('Y'); // 2022
+
+        $intCurrentMonth = date('n'); // 1
+        $intCurrentYr = date('Y'); // 2023
+        $intCurrentYear = ($intCurrentYr - $intInitialYear) * 12; // 12
+        $intCurrentDate = $intCurrentMonth + $intCurrentYear; // 13
+
+        $actualWastePerCapita = $totalWaste / $pop;
+        $actualResidualPercentage = $residual / $totalWaste;
+        $projectedPop = $pop; //initial Population
+        
+        $projectedRes = '';
+        $projectedDRW = '';
+
+        $monthlyGR = pow((1+ ($gr/100)),(1/12))-1;
+
+        if($intInitialMonth != $intCurrentDate){
+            for($i = $intInitialMonth; $i < $intCurrentDate; $i++){
+                $projectedPop = $projectedPop + ($projectedPop * $monthlyGR);
+                $projectedRes = ($projectedPop * $actualWastePerCapita) * $actualResidualPercentage;
+                $projectedDRW = $projectedRes - ($projectedRes * ($rer/100));
+            }
+    
+            $projectedPop = round($projectedPop);
+            $projectedRes = round($projectedRes);
+            $projectedDRW = round($projectedDRW);
+        }
+        else{
+            $projectedPop = $pop;
+            $projectedRes = $residual;
+            $projectedDRW = $projectedRes - ($projectedRes * ($rer/100));
+        }
+        
+
+        $CP = array("projectedPop" => $projectedPop, "projectedRes" => $projectedRes, "projectedDRW" => $projectedDRW);
+
+        return $CP;
+/*
+        $intFinalMonth = $finalDate->format('n'); // 12
+        $intFinalYear = $years * 12; //120
+        $intFinalDate = $intFinalMonth + $intFinalYear; //132
+*/
+
+    }
+
 }

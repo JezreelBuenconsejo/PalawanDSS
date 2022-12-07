@@ -12,7 +12,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col">
                                         <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>main result</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>{{$res->mainRes}}</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span>{{$res->initialResult->mainRes}}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col">
                                         <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>projected result</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>{}</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span>{{$res->projections->projectedResult}}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -38,15 +38,15 @@
                                         <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Progress</span></div>
                                         <div class="row g-0 align-items-center d-flex justify-content-center">
                                             <div class="col-auto">
-                                                <div class="text-dark fw-bold h5 mb-0 me-2"><span>{{$res->startYear}}</span></div>
+                                                <div class="text-dark fw-bold h5 mb-0 me-2"><span>{{$res->initialResult->startYear}}</span></div>
                                             </div>
                                             <div class="col-7 col-sm-9 col-md-8 col-lg-10 col-xl-9 col-xxl-10">
                                                 <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-info" aria-valuenow="{}" aria-valuemin="0" aria-valuemax="100" style="width: {}%;"><span class="visually-hidden">50%</span></div>
+                                                    <div class="progress-bar bg-info" aria-valuenow="{{$res->progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$res->progress}}%;"><span class="visually-hidden"></span></div>
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <div class="text-dark fw-bold h5 mb-0 ms-2"><span>{}</span></div>
+                                                <div class="text-dark fw-bold h5 mb-0 ms-2"><span>{{$res->projections->finalYear}}</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -127,13 +127,16 @@
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
                 <div class="text-center my-auto copyright"><span>Copyright © Palawan DSS 2022</span></div>
+                
             </div>
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+
 <script>
-    const residual = [{label: "Feb-2022", res: "20"}, {label: "May-2025", res: "45"},{label: "Oct-2032", res: "94"}]; 
-    const DRW = [{label: "Feb-2022", DRW: "1"}, {label: "May-2025", DRW: "40"},{label: "Oct-2032", DRW: "76"}];
+    const residual = [{label: "{{$res->dates->initialDate}}", res: "{{$res->initialInput->res}}"}, {label: "{{$res->dates->currentDate}}", res: "{{$res->currentProjections->projectedRes}}"},{label: "{{$res->dates->finalDate}}", res: "{{$res->projections->projectedRes}}"}]; 
+    const DRW1 = [{label: "{{$res->dates->initialDate}}", DRW: "{{$res->initialInput->drw}}"},{label: "{{$res->dates->currentDate}}", DRW: "{{$res->currentProjections->projectedDRW}}"},{label: "{{$res->dates->finalDate}}", DRW: "{{$res->projections->projectedDRW}}"}];
+    const Population = [{label: "{{$res->dates->initialDate}}", pop: "{{$res->initialInput->pop}}"},{label: "{{$res->dates->currentDate}}", pop: "{{$res->currentProjections->projectedPop}}"},{label: "{{$res->dates->finalDate}}", pop: "{{$res->projections->projectedPop}}"}];
 
     new Chart("residualWaste", {
       type: 'line',
@@ -147,7 +150,7 @@
           },{
             label: "Diverted Residual Waste",
             fill: false,
-            data: DRW.map(o => ({ x: o.label, y: Number(o.DRW)})),
+            data: DRW1.map(o => ({ x: o.label, y: Number(o.DRW)})),
             backgroundColor:'rgba(255,0,0,0.64)',
             borderColor:'rgba(255,0,0,0.64)'
           }
@@ -192,7 +195,7 @@
         datasets: [{
             label: "Population",
             fill: false,
-            data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
+            data: Population.map(o => ({ x: o.label, y: Number(o.pop)})),
             backgroundColor:'rgba(78, 115, 223, 1)',
             borderColor:'rgba(78, 115, 223, 1)'
           }
