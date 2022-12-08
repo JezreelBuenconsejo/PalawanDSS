@@ -137,7 +137,8 @@
     const residual = [{label: "{{$res->dates->initialDate}}", res: "{{$res->initialInput->res}}"}, {label: "{{$res->dates->currentDate}}", res: "{{$res->currentProjections->projectedRes}}"},{label: "{{$res->dates->finalDate}}", res: "{{$res->projections->projectedRes}}"}]; 
     const DRW1 = [{label: "{{$res->dates->initialDate}}", DRW: "{{$res->initialInput->drw}}"},{label: "{{$res->dates->currentDate}}", DRW: "{{$res->currentProjections->projectedDRW}}"},{label: "{{$res->dates->finalDate}}", DRW: "{{$res->projections->projectedDRW}}"}];
     const Population = [{label: "{{$res->dates->initialDate}}", pop: "{{$res->initialInput->pop}}"},{label: "{{$res->dates->currentDate}}", pop: "{{$res->currentProjections->projectedPop}}"},{label: "{{$res->dates->finalDate}}", pop: "{{$res->projections->projectedPop}}"}];
-
+    const waste = [{label: "{{$res->dates->initialDate}}", w: "{{$res->waste->itotal}}"},{label: "{{$res->dates->currentDate}}", w: "{{$res->waste->ctotal}}"},{label: "{{$res->dates->finalDate}}", w: "{{$res->waste->ptotal}}"}];
+    
     new Chart("residualWaste", {
       type: 'line',
       data: {
@@ -189,7 +190,7 @@
       }
     });
     
-    new Chart("projectedWaste", {
+    new Chart("projectedPopulation", {
       type: 'line',
       data: {
         datasets: [{
@@ -235,13 +236,13 @@
       }
     });
 
-    new Chart("projectedPopulation", {
+    new Chart("projectedWaste", {
       type: 'line',
       data: {
         datasets: [{
-            label: "Population",
+            label: "Total Waste",
             fill: false,
-            data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
+            data: waste.map(o => ({ x: o.label, y: Number(o.w)})),
             backgroundColor:'rgba(78, 115, 223, 1)',
             borderColor:'rgba(78, 115, 223, 1)'
           }

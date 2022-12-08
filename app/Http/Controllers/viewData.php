@@ -110,10 +110,10 @@ class viewData extends Controller
         }
         $estBio = ''; $estRec = ''; $estRes = ''; $estSpe = ''; $estTotal = '';
         $estTotal = $pop * $benchTotal;
-        $estBio = round($estTotal * ($benchBio/100),2);
-        $estRec = round($estTotal * ($benchRec/100),2);
-        $estRes = round($estTotal * ($benchRes/100),2);
-        $estSpe = round($estTotal * ($benchSpe/100),2);
+        $estBio = round($estTotal * ($benchBio/100),3);
+        $estRec = round($estTotal * ($benchRec/100),3);
+        $estRes = round($estTotal * ($benchRes/100),3);
+        $estSpe = round($estTotal * ($benchSpe/100),3);
         $benchmarkArr = array('estimatedBio'=>$estBio,'estimatedRec'=>$estRec,'estimatedRes'=>$estRes,'estimatedSpe'=>$estSpe,'estimatedTotal'=>$estTotal);
         return $benchmarkArr;
     }
@@ -207,9 +207,13 @@ class viewData extends Controller
 
         $dates = array("initialDate" => $initialDate,"finalDate"=>$finalD,"currentDate"=>$currentDate);
 
+        //current projections
         $currentProjections = $this->current_projections($total,$res,$pop,$gr,$rer,$dateCreated);
 
-        $result = array("initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections);
+        //waste date
+        $waste = $this->total_waste($bio, $rec, $res, $spe, $total, $pop, $gr,$dateCreated,$time);
+
+        $result = array("initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections,"waste"=>$waste);
         
         $resultsEncode = json_encode($result);
         $res = json_decode($resultsEncode);
@@ -243,13 +247,13 @@ class viewData extends Controller
             }
     
             $projectedPop = round($projectedPop);
-            $projectedRes = round($projectedRes);
-            $projectedDRW = round($projectedDRW);
+            $projectedRes = round($projectedRes,3);
+            $projectedDRW = round($projectedDRW,3);
         }
         else{
             $projectedPop = $pop;
             $projectedRes = $residual;
-            $projectedDRW = $projectedRes - ($projectedRes * ($rer/100));
+            $projectedDRW = round($projectedRes - ($projectedRes * ($rer/100)),2);
         }
         
 
@@ -261,7 +265,72 @@ class viewData extends Controller
         $intFinalYear = $years * 12; //120
         $intFinalDate = $intFinalMonth + $intFinalYear; //132
 */
+    }
 
+    function total_waste($bio,$rec,$res,$spe,$total,$pop,$gr,$startDate,$years){
+        $startMonth = $startDate->format('n'); // 12
+        $startYear = $startDate->format('Y');
+        $finalYear = $startYear + $years;
+
+        $wastePerCapita = $total / $pop;
+        $bioPercent = round($bio / $total,3);
+        $recPercent = round($rec / $total,3);
+        $resPercent = round($res / $total,3);
+        $spePercent = round($spe / $total,3);
+        
+
+        $pbio = $bio;
+        $prec = $rec;
+        $pres = $res;
+        $pspe = $spe;
+        $ptotal = 0;
+        $ppop = $pop;
+        for ($i = intval($startYear); $i < $finalYear; $i++){
+            $ppop = $ppop + ($ppop * ($gr/100));
+            $pbio = ($ppop * $wastePerCapita) * $bioPercent;
+            $prec = ($ppop * $wastePerCapita) * $recPercent;
+            $pres = ($ppop * $wastePerCapita) * $resPercent;
+            $pspe = ($ppop * $wastePerCapita) * $spePercent;
+            $ptotal = $pbio + $prec + $pres + $pspe;
+        }
+
+
+
+        $sYear = new Carbon($startDate);
+        $intCurrentMonth = date('n'); // 1
+        $intCurrentYr = date('Y'); // 2023
+        $intCurrentYear = ($intCurrentYr - $sYear->year) * 12; // 12
+        $intCurrentDate = $intCurrentMonth + $intCurrentYear; // 13
+
+        $cbio = '';
+        $crec = '';
+        $cres = '';
+        $cspe = '';
+        $ctotal = 0;
+        $cpop = $pop;
+        
+        $monthlyGR = pow((1+ ($gr/100)),(1/12))-1;
+        if($startMonth != $intCurrentDate){
+            for($i = $startMonth; $i < $intCurrentDate; $i++){
+                $cpop = $cpop + ($cpop * $monthlyGR);
+                $cbio = ($cpop * $wastePerCapita) * $bioPercent;
+                $crec = ($cpop * $wastePerCapita) * $recPercent;
+                $cres = ($cpop * $wastePerCapita) * $resPercent;
+                $cspe = ($cpop * $wastePerCapita) * $spePercent;
+                $ctotal = $cbio + $crec + $cres + $cspe;
+            }
+        } 
+        else 
+        {
+            $cbio = $bio;
+            $crec = $rec;
+            $cres = $res;
+            $cspe = $spe;
+            $ctotal = $total;
+        }
+
+        $CW = array("ibio"=>$bio,"irec"=>$rec,"ires"=>$res,"ispe"=>$spe,"itotal"=>$total,"cbio"=>round($cbio,3),"crec"=>round($crec,3),"cres"=>round($cres,3),"cspe"=>round($cspe,3),"ctotal"=>round($ctotal,3),"pbio"=>round($pbio,3),"prec"=>round($prec,3),"pres"=>round($pres,3),"pspe"=>round($pspe,3),"ptotal"=>round($ptotal,3));
+        return $CW;
     }
 
 }

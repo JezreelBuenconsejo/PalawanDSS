@@ -157,10 +157,10 @@ class dssController extends Controller
         }
         $estBio = ''; $estRec = ''; $estRes = ''; $estSpe = ''; $estTotal = '';
         $estTotal = $pop * $benchTotal;
-        $estBio = round($estTotal * ($benchBio/100),2);
-        $estRec = round($estTotal * ($benchRec/100),2);
-        $estRes = round($estTotal * ($benchRes/100),2);
-        $estSpe = round($estTotal * ($benchSpe/100),2);
+        $estBio = round($estTotal * ($benchBio/100),3);
+        $estRec = round($estTotal * ($benchRec/100),3);
+        $estRes = round($estTotal * ($benchRes/100),3);
+        $estSpe = round($estTotal * ($benchSpe/100),3);
         $benchmarkArr = array('estimatedBio'=>$estBio,'estimatedRec'=>$estRec,'estimatedRes'=>$estRes,'estimatedSpe'=>$estSpe,'estimatedTotal'=>$estTotal);
         return $benchmarkArr;
     }
