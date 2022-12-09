@@ -167,11 +167,19 @@ class viewData extends Controller
         foreach($dssResults as $data){
             $mainRes = $data->MainResult;
             $dateCreated = $data->date_created;
+            $altRes = $data->AlternativeResult;
+
         }
         $dateCreated = new Carbon($dateCreated);
         $startYear = $dateCreated->year;
-        
-        $initialResult = array("mainRes" =>"Category ". $mainRes, "startYear" => $startYear);
+        $showAltRes = false;
+        if($altRes == " " || $altRes == null){
+            $showAltRes = false;
+        }
+        else{
+            $showAltRes = true;
+        }
+        $initialResult = array("mainRes" =>"Category ". $mainRes, "altRes"=>$altRes,"startYear" => $startYear, "showAltRes"=>$showAltRes);
 
         //projected results
         $dssProjections = DB::select('SELECT * FROM `projection` WHERE userID = :user ORDER by start_date DESC limit 1',array('user'=>$user));
