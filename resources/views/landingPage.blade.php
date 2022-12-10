@@ -37,7 +37,7 @@
     <main class="page landing-page">
         <section class="clean-block clean-hero" style="color: rgba(93,247,109,0.85);border-color: rgba(93,247,109,0.85);background: url(&quot;assets/img/tech/Sanitary-landfills-Design-4.jpg&quot;), #63d68a; background-size:cover;">
             <div class="text">
-                <h2>Decision Support System for Ecological Solid Waste Center of Islands Municipalities in Palawan</h2>
+                <h2>Decision Support System for Solid Waste Disposal Center of Islands Municipalities in Palawan</h2>
                 <p><span style="color: rgb(0, 0, 0); background-color: transparent;">The purpose of the decision support system (DSS) is to create aid planners in making decisions on the overall management of solid waste at a small island municipality. The DSS enables sanitary, efficient, and cost-effective solid waste storage, collection, transportation, treatment, and disposal without harming the environment, land, or water system.</span><br><br><br></p><button class="btn btn-outline-light btn-lg" type="button">Learn More</button>
             </div>
         </section>
