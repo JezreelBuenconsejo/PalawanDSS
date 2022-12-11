@@ -167,6 +167,11 @@
                     <p></p>
                 </div>
                 <form action="sendMail" method="GET">
+                    @if ($message != null || $message != "")
+                    <p style="background: #00ff19;">Thank you for sending a message to our team, expect a response within 24 to 48 hours .</p>
+                    @else
+                        
+                    @endif
                     <div class="mb-3"><label class="form-label" for="name">Name</label>
                         <input class="form-control" type="text" id="name" name="name"></div>
                     <div class="mb-3"><label class="form-label" for="subject">Subject</label>

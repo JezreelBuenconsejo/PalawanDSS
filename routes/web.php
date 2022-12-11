@@ -18,10 +18,16 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('landingPage');
+    $message = '';
+    return view('landingPage',['message' => $message]);
 });
 
 Route::get('/sendMail', [MailController::class, 'sendMail']);
+
+Route::get('/mailSent', function () {
+    $message = true;
+    return view('landingPage',['message' => $message]);
+});
 
 Auth::routes();
 

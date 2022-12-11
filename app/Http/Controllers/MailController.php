@@ -16,6 +16,6 @@ class MailController extends Controller
 
         Mail::to($email)->cc('201880436@psu.palawan.edu.ph')->send(new SendEmail($email,$name,$subject,$messageText));
 
-        return redirect('/#ContactUs');
+        return redirect()->to('/mailSent' . '#ContactUs');
     }
 }
