@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dssController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\postDataController;
 use App\Http\Controllers\viewData;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('landingPage');
 });
+
+Route::get('/sendMail', [MailController::class, 'sendMail']);
 
 Auth::routes();
 
