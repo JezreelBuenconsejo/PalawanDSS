@@ -9,7 +9,15 @@
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css">
     <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+    <script>
+        var msg = "{{Session::get('alert')}}";
+        var exist = "{{Session::has('alert')}}";
+        if(exist == '1'){
+          alert(msg);
+        }
+      </script>
 </head>
+
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
@@ -165,21 +173,27 @@
                 <div class="block-heading">
                     <h2 class="text-info">Contact Us</h2>
                     <p></p>
-                </div>
+                </div>            
                 <form action="sendMail" method="GET">
-                    @if ($message != null || $message != "")
-                    <p style="background: #00ff19;">Thank you for sending a message to our team, expect a response within 24 to 48 hours .</p>
-                    @else
-                        
-                    @endif
-                    <div class="mb-3"><label class="form-label" for="name">Name</label>
-                        <input class="form-control" type="text" id="name" name="name"></div>
+                @if(session()->has('alert'))
+                    <p style="background: #00ff19;">
+                        Thank you for sending a message to our team, expect a response within 24 to 48 hours via email<br><br>
+                        You can also contact us on our phone support via call or text message at 0965-446-4832 (TM)
+                    <p>
+                @endif
+                    <div class="mb-3"><label class="form-label" for="name">LGU Name</label>
+                        <input class="form-control" type="text" id="name" name="name" required></div>
                     <div class="mb-3"><label class="form-label" for="subject">Subject</label>
-                        <input class="form-control" type="text" id="subject" name="subject"></div>
+                    <select class="form-select" style="width: auto;" id="subject" name="subject" required>
+                            <option value="">Please Select</option>
+                            <option value="Account Creation">Account Creation</option>
+                            <option value="Password Recovery">Password Recovery</option>
+                            <option value="Other Inquiry">Other Inquiry</option>
+                        </select>
                     <div class="mb-3"><label class="form-label" for="email">Email</label>
-                        <input class="form-control" type="email" id="email" name="email"></div>
+                        <input class="form-control" type="email" id="email" name="email" required></div>
                     <div class="mb-3"><label class="form-label" for="message">Message</label>
-                        <textarea class="form-control" id="message" name="messageText"></textarea></div>
+                        <textarea class="form-control" id="message" name="messageText" required></textarea></div>
                     <div class="mb-3"><button class="btn btn-primary" type="submit">Send</button></div>
                 </form>
             </div>
