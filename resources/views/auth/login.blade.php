@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-center align-items-center">
             <!-- Logo -->
                 <a href="{{ route('dashboard') }}" class="d-inline">
-                     <img src="picture/PalawanSeal.png" class="block fill-current text-gray-600" style="height: 75px; width: 75px; margin-right: 10px" />
+                     <img src="picture/RRR.png" class="block fill-current text-gray-600" style="height: 75px; width: 75px; margin-right: 10px" />
                 </a>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight d-inline">
                     {{ __('Palawan Decision Support System') }}
