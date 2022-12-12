@@ -46,7 +46,7 @@
         <section class="clean-block clean-hero" style="color: rgba(93,247,109,0.85);border-color: rgba(93,247,109,0.85);background: url(&quot;assets/img/tech/Sanitary-landfills-Design-4.jpg&quot;), #63d68a; background-size:cover;">
             <div class="text">
                 <h2>Decision Support System for Solid Waste Disposal Center of Islands Municipalities in Palawan</h2>
-                <p><span style="color: rgb(0, 0, 0); background-color: transparent;">The purpose of the decision support system (DSS) is to create aid planners in making decisions on the overall management of solid waste at a small island municipality. The DSS enables sanitary, efficient, and cost-effective solid waste storage, collection, transportation, treatment, and disposal without harming the environment, land, or water system.</span><br><br><br></p><button class="btn btn-outline-light btn-lg" type="button"><a href="#About">Learn More</a></button>
+                <p><span style="color: rgb(0, 0, 0); background-color: transparent;">The purpose of the decision support system (DSS) is to create aid planners in making decisions on the overall management of solid waste at a small island municipality. The DSS enables sanitary, efficient, and cost-effective solid waste storage, collection, transportation, treatment, and disposal without harming the environment, land, or water system.</span><br><br><br></p><button class="btn btn-outline-light btn-lg" type="button" onClick="document.getElementById('About').scrollIntoView();">Learn More</button>
             </div>
         </section>
         <section class="clean-block clean-info dark" id="About">
@@ -175,7 +175,7 @@
                 </div>
                 <div class="row gy-3 justify-content-center" style="margin-bottom: 0px;">
                     <div class="col-sm-6 col-lg-4">
-                        <div class="card text-center clean-card">
+                        <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/123763638_10218077542750127_978053126958902492_n.jpg">
                             <div class="card-body info">
                                 <h4 class="card-title">Menchie Lopez</h4>
                                 <p class="card-text" style="height: 164.625px;"><strong>Technical and Research Adviser</strong><br><em>Faculty and Professor</em><br>&nbsp;Computer Studies Department<br>College of Sciences<br>Palawan State University</p>
@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
-                        <div class="card text-center clean-card">
+                        <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/311285697_10229023735396845_8983993569082665838_n.jpg">
                             <div class="card-body info" style="padding-right: 0px;padding-left: 0px;height: 293.79px;">
                                 <h4 class="card-title">Dr. Ma. Rosario Aynon V. Arciaga-Gonzales,PhD.<br></h4>
                                 <p class="card-text"><strong>Research Consultant</strong><br>Author of the dissertation titled <br><em>"Decision Support System for Solid Wastes Final Disposal Facility in Small Island Municipalities, Palawan, Philippines"</em><br>University Engineer<br>Palawan State University<br></p>
