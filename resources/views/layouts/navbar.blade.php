@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light navbar-expand-md py-3" style="background-color: rgb(171, 245, 171)">
     <div class="container" style="margin-left:2%">
-            <img src="/picture/PalawanSeal.png" style="height: 70px; width: 70px;">
+            <img src="/picture/RRR.png" style="height: 70px; width: 70px;">
         <a class="navbar-brand d-flex align-items-center" href="#">
             <span class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 3%">
                 {{ __('Palawan Decision Support System') }}
