@@ -46,7 +46,7 @@
         <section class="clean-block clean-hero" style="color: rgba(93,247,109,0.85);border-color: rgba(93,247,109,0.85);background: url(&quot;assets/img/tech/Sanitary-landfills-Design-4.jpg&quot;), #63d68a; background-size:cover;">
             <div class="text">
                 <h2>Decision Support System for Solid Waste Disposal Center of Islands Municipalities in Palawan</h2>
-                <p><span style="color: rgb(0, 0, 0); background-color: transparent;">The purpose of the decision support system (DSS) is to create aid planners in making decisions on the overall management of solid waste at a small island municipality. The DSS enables sanitary, efficient, and cost-effective solid waste storage, collection, transportation, treatment, and disposal without harming the environment, land, or water system.</span><br><br><br></p><button class="btn btn-outline-light btn-lg" type="button">Learn More</button>
+                <p><span style="color: rgb(0, 0, 0); background-color: transparent;">The purpose of the decision support system (DSS) is to create aid planners in making decisions on the overall management of solid waste at a small island municipality. The DSS enables sanitary, efficient, and cost-effective solid waste storage, collection, transportation, treatment, and disposal without harming the environment, land, or water system.</span><br><br><br></p><button class="btn btn-outline-light btn-lg" type="button"><a href="#About">Learn More</a></button>
             </div>
         </section>
         <section class="clean-block clean-info dark" id="About">
@@ -113,18 +113,19 @@
                 </div>
             </div>
         </section>
+        
         <section class="clean-block about-us" id="Team">
             <div class="container">
                 <div class="block-heading">
                     <h2 class="text-info">Team</h2>
-                    <p>&nbsp;The Developer of Web-Based Decision Support System for Solid Waste Disposal Center of Island Municipality <br><br>4th Year College Students of Palawan State University taking up Bachelor of Science in Computer Science.</p>
+                    <p>&nbsp;The Developers and Researchers of Web-Based Decision Support System for Solid Waste Disposal Center of Island Municipality <br><br>4th Year College Students of Palawan State University taking up Bachelor of Science in Computer Science.</p>
                 </div>
                 <div class="row gy-3 justify-content-center" style="margin-bottom: 0px;">
                     <div class="col-sm-6 col-lg-4">
                         <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/172310918_1864468880374443_5942431144869244148_n.jpg">
                             <div class="card-body info">
                                 <h4 class="card-title">Jezreel Jose Buenconsejo</h4>
-                                <p class="card-text">BSCS 4th Year<br>Palawan State University</p>
+                                <p class="card-text"><strong>Full-Stack Developer</strong><br>BSCS 4th Year<br>Palawan State University</p>
                                 <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
                             </div>
                         </div>
@@ -133,7 +134,7 @@
                         <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/306930414_3224922437758616_7053087656978589638_n.jpg">
                             <div class="card-body info">
                                 <h4 class="card-title">Jesfert Roy Pabon</h4>
-                                <p class="card-text">BSCS 4th Year<br>Palawan State University<br></p>
+                                <p class="card-text"><strong>Lead Documentation Administrator</strong><br>BSCS 4th Year<br>Palawan State University<br></p>
                                 <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
                             </div>
                         </div>
@@ -142,7 +143,7 @@
                         <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/117643819_705597696656298_4432439670189330094_n.jpg">
                             <div class="card-body info">
                                 <h4 class="card-title">Reven Jeremiah Maglaque</h4>
-                                <p class="card-text">BSCS 4th Year<br>Palawan State University<br></p>
+                                <p class="card-text"><strong>Assistant Documentation Specialist</strong><br>BSCS 4th Year<br>Palawan State University<br></p>
                                 <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
                             </div>
                         </div>
@@ -151,7 +152,7 @@
                         <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/311244973_413961490917119_3525706715326300630_n.jpg">
                             <div class="card-body info">
                                 <h4 class="card-title">Jayhan S. Bairulla</h4>
-                                <p class="card-text">BSCS 4th Year<br>Palawan State University<br></p>
+                                <p class="card-text"><strong>Data Gathering Specialist</strong><br>BSCS 4th Year<br>Palawan State University<br></p>
                                 <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
                             </div>
                         </div>
@@ -160,7 +161,33 @@
                         <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/295496586_1599690043761119_5395132662021850570_n.jpg">
                             <div class="card-body info">
                                 <h4 class="card-title">Francis Deo H. Almazan</h4>
-                                <p class="card-text">BSCS 4th Year<br>Palawan State University<br></p>
+                                <p class="card-text"><strong>Data Gathering Specialist</strong><br>BSCS 4th Year<br>Palawan State University<br></p>
+                                <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Advisers and Consultants</h2>
+                    <p>Professors and Professionals who provided excellent assistance and shared their expertise in their respective fields</p>
+                </div>
+                <div class="row gy-3 justify-content-center" style="margin-bottom: 0px;">
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="card text-center clean-card">
+                            <div class="card-body info">
+                                <h4 class="card-title">Menchie Lopez</h4>
+                                <p class="card-text" style="height: 164.625px;"><strong>Technical and Research Adviser</strong><br><em>Faculty and Professor</em><br>&nbsp;Computer Studies Department<br>College of Sciences<br>Palawan State University</p>
+                                <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="card text-center clean-card">
+                            <div class="card-body info" style="padding-right: 0px;padding-left: 0px;height: 293.79px;">
+                                <h4 class="card-title">Dr. Ma. Rosario Aynon V. Arciaga-Gonzales,PhD.<br></h4>
+                                <p class="card-text"><strong>Research Consultant</strong><br>Author of the dissertation titled <br><em>"Decision Support System for Solid Wastes Final Disposal Facility in Small Island Municipalities, Palawan, Philippines"</em><br>University Engineer<br>Palawan State University<br></p>
                                 <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
                             </div>
                         </div>
