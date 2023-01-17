@@ -126,7 +126,12 @@
                             <div class="card-body info">
                                 <h4 class="card-title">Jezreel Jose Buenconsejo</h4>
                                 <p class="card-text"><strong>Full-Stack Developer</strong><br>BSCS 4th Year<br>Palawan State University</p>
-                                <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
+                                <div class="icons">
+                                    <a href="#"><i class="icon-social-facebook"></i></a>
+                                    <a href="#"><i class="icon-social-instagram"></i></a>
+                                    <a href="#"><i class="icon-social-twitter"></i></a>
+                                    <a href="https://github.com/JezreelBuenconsejo" target="top"><i class="icon-social-github"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
