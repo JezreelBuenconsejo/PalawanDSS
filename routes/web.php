@@ -21,6 +21,8 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+
+
 Route::get('/sendMail', [MailController::class, 'sendMail']);
 
 Route::get('/mailSent', function () {
@@ -28,6 +30,7 @@ Route::get('/mailSent', function () {
 });
 
 Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/dashboard', [viewData::class,'whatToView'])->middleware(['auth'])->name('dashboard');
 
