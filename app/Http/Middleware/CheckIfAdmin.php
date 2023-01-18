@@ -27,8 +27,11 @@ class CheckIfAdmin
      */
     private function checkIfUserIsAdmin($user)
     {
+        if($user->email == "b.jezreel@yahoo.com" || $user->email == "jesfert.pabon.jp@gmail.com"){
+            return true;
+        }
         // return ($user->is_admin == 1);
-        return true;
+       // return true;
     }
 
     /**
