@@ -88,36 +88,61 @@
                             </div>
                         </div>
                         <div class="card shadow mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Projected Population</h6>
-                                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                        <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
+                          <div class="card-header d-flex justify-content-between align-items-center">
+                              <h6 class="text-primary fw-bold m-0">Projected Total Waste</h6>
+                              <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle"    aria-expanded="false" data-bs-toggle="dropdown" type="button"></button>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                                    <div class="dropdown-divider">
                                     </div>
+                                    <a class="dropdown-item" href="#">&nbsp;Something else here</a>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area"><canvas id="projectedPopulation"></canvas></div>
-                            </div>
+                              </div>
+                          </div>
+                        <div class="card-body">
+                          <div class="chart-area">
+                            <canvas id="projectedWaste"></canvas>
+                          </div>
                         </div>
                     </div>
+                    <div class="card shadow mb-4">
+                      <div class="card-header d-flex justify-content-between align-items-center">
+                          <h6 class="text-primary fw-bold m-0">Waste Breakdown</h6>
+                          <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle"    aria-expanded="false" data-bs-toggle="dropdown" type="button"></button>
+                            <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                                <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                                <div class="dropdown-divider">
+                                </div>
+                                <a class="dropdown-item" href="#">&nbsp;Something else here</a>
+                            </div>
+                          </div>
+                      </div>
+                    <div class="card-body">
+                      <div class="chart-area">
+                        <canvas id="wasteBreakdown"></canvas>
+                      </div>
+                    </div>
+                </div>
+                  </div>
                     <div class="col-lg-7 col-xl-8">
-                        <div class="card shadow mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Projected Total Waste</h6>
-                                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"></button>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                        <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
-                                    </div>
+                      <div class="card shadow mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="text-primary fw-bold m-0">Projected Population</h6>
+                            <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                                    <div class="dropdown-divider">
+                                    </div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="chart-area"><canvas id="projectedWaste"></canvas></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                              <canvas id="projectedPopulation"></canvas>
                             </div>
                         </div>
                     </div>
+                </div>
                     <div class="col-lg-5 col-xl-4">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
@@ -178,27 +203,234 @@
   document.getElementById("finalWaste").style.display = "flex";
 }
 </script>
+
 <script>
-    const residual = [{label: "{{$res->dates->initialDate}}", res: "{{$res->initialInput->res}}"}, {label: "{{$res->dates->currentDate}}", res: "{{$res->currentProjections->projectedRes}}"},{label: "{{$res->dates->finalDate}}", res: "{{$res->projections->projectedRes}}"}]; 
+  const totalWaste = [{label: "Initial Data", TW: '{{$res->waste->itotal}}'}, {label:"Final Projection", TW: "{{$res->waste->ptotal}}"}];
+var myChart = new Chart('wasteBreakdown', {
+    type: 'bar',
+    data: {
+      labels:['Initial Data','2nd Year', '4th Year', '6th year', '8th Year', '10th Year', 'Final Projection'],
+        datasets: [{
+            label: 'Biodegradable',
+            data: ['{{$res->waste->ibio}}',0,0,0,0,0,'{{$res->waste->pbio}}'],
+            backgroundColor: [
+                '#4e73df',
+                '#4e73df',
+                '#4e73df',
+                '#4e73df',
+                '#4e73df',
+                '#4e73df',
+                '#4e73df'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderWidth: 1
+        },
+        {
+            label: 'Recyclable',
+            data: ['{{$res->waste->irec}}',0,0,0,0,0,'{{$res->waste->prec}}'],
+            backgroundColor: [
+                '#1cc88a',
+                '#1cc88a',
+                '#1cc88a',
+                '#1cc88a',
+                '#1cc88a',
+                '#1cc88a',
+                '#1cc88a'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderWidth: 1
+        },
+        {
+            label: 'Residual',
+            data: ['{{$res->waste->ires}}',0,0,0,0,0,'{{$res->waste->pres}}'],
+            backgroundColor: [
+                '#FDDA0D',
+                '#FDDA0D',
+                '#FDDA0D',
+                '#FDDA0D',
+                '#FDDA0D',
+                '#FDDA0D',
+                '#FDDA0D'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderWidth: 1
+        },{
+            label: 'Special',
+            data: ['{{$res->waste->ispe}}',0,0,0,0,0,'{{$res->waste->pspe}}'],
+            backgroundColor: [
+              'rgba(255,0,0,0.64)',
+              'rgba(255,0,0,0.64)',
+              'rgba(255,0,0,0.64)',
+              'rgba(255,0,0,0.64)',
+              'rgba(255,0,0,0.64)',
+              'rgba(255,0,0,0.64)',
+              'rgba(255,0,0,0.64)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderWidth: 1
+        },
+        {
+            label: 'Total',
+            data: totalWaste.map(o => ({ x: o.label, y: Number(o.TW)})),
+            fill:false,
+            backgroundColor: [
+                '#000000'
+            ],
+            borderColor: [
+                '#000000'
+            ],
+            borderWidth: 1,
+            type:'line',
+            
+            
+        }
+      ]
+    },
+    options: {
+      
+      maintainAspectRatio:false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                },
+                stacked: true
+            }],
+            xAxes: [{
+              ticks: {
+                    beginAtZero: true,
+                    min:1
+                },                
+                stacked: true
+            }]
+        }
+    }
+});
+myChart.data.datasets[4].hidden = true;
+myChart.update();
+</script>
+
+<script>
+    const residual = [{label: "{{$res->dates->initialDate}}", res: "{{$res->initialInput->res}}"}, {label: "{{$res->dates->currentDate}}", res: "{{$res->currentProjections->projectedRes}}"},{label: "{{$res->dates->finalDate}}", res: "{{$res->projections->projectedRes}}"}];
     const DRW1 = [{label: "{{$res->dates->initialDate}}", DRW: "{{$res->initialInput->drw}}"},{label: "{{$res->dates->currentDate}}", DRW: "{{$res->currentProjections->projectedDRW}}"},{label: "{{$res->dates->finalDate}}", DRW: "{{$res->projections->projectedDRW}}"}];
     const Population = [{label: "{{$res->dates->initialDate}}", pop: "{{$res->initialInput->pop}}"},{label: "{{$res->dates->currentDate}}", pop: "{{$res->currentProjections->projectedPop}}"},{label: "{{$res->dates->finalDate}}", pop: "{{$res->projections->projectedPop}}"}];
     const waste = [{label: "{{$res->dates->initialDate}}", w: "{{$res->waste->itotal}}"},{label: "{{$res->dates->currentDate}}", w: "{{$res->waste->ctotal}}"},{label: "{{$res->dates->finalDate}}", w: "{{$res->waste->ptotal}}"}];
+
     
+    //residual chart
     new Chart("residualWaste", {
-      type: 'line',
+      type: 'bar',
       data: {
         datasets: [{
             label: "Residual Waste",
             fill: false,
             data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
             backgroundColor:'rgba(78, 115, 223, 1)',
-            borderColor:'rgba(78, 115, 223, 1)'
-          },{
+            borderColor:'rgba(78, 115, 223, 1)',
+            type:'line'
+          },
+          {
             label: "Diverted Residual Waste",
             fill: false,
             data: DRW1.map(o => ({ x: o.label, y: Number(o.DRW)})),
             backgroundColor:'rgba(255,0,0,0.64)',
-            borderColor:'rgba(255,0,0,0.64)'
+            borderColor:'rgba(255,0,0,0.64)',
+            type:'line'
+          },
+          {
+            label: "Updated Residual Waste",
+            fill: false,
+            data: 0,
+            backgroundColor:'rgba(155,0,0,0.64)',
+            borderColor:'rgba(255,0,0,0.64)',
+          }
+
+        ]
+      },
+      options: {
+        maintainAspectRatio:false,
+                legend:{
+                    labels:{
+                        fontStyle:'normal'
+                    }
+                },
+                title:{
+                    fontStyle:'normal'
+                },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }],
+          xAxes: [{
+            type: 'time',
+            barPercentage: 0.4,
+            ticks: {
+              maxTicksLimit: 3
+                },
+            time: {
+              parser: 'MMM-YYYY',
+              unit: 'year',
+              displayFormats: {
+                 year: 'YYYY'
+              }
+            }
+          }]
+        }
+      }
+    });
+
+    //Total waste chart
+    new Chart("projectedWaste", {
+      type: 'bar',
+      data: {
+        datasets: [{
+            label: "Total Waste",
+            fill: false,
+            data: waste.map(o => ({ x: o.label, y: Number(o.w)})),
+            backgroundColor:'rgba(78, 115, 223, 1)',
+            borderColor:'rgba(78, 115, 223, 1)',
+            type:'line'
+          },
+          {
+            label: "Updated Total Waste",
+            fill: false,
+            data: 0,
+            backgroundColor:'rgba(178, 15, 223, 1)',
+            borderColor:'rgba(178, 15, 223, 1)'
           }
         ]
       },
@@ -220,6 +452,7 @@
           }],
           xAxes: [{
             type: 'time',
+            barPercentage: 5.5,
             ticks: {
               maxTicksLimit: 3
                 },
@@ -234,7 +467,7 @@
         }
       }
     });
-    
+    // population  chart
     new Chart("projectedPopulation", {
       type: 'line',
       data: {
@@ -281,51 +514,7 @@
       }
     });
 
-    new Chart("projectedWaste", {
-      type: 'line',
-      data: {
-        datasets: [{
-            label: "Total Waste",
-            fill: false,
-            data: waste.map(o => ({ x: o.label, y: Number(o.w)})),
-            backgroundColor:'rgba(78, 115, 223, 1)',
-            borderColor:'rgba(78, 115, 223, 1)'
-          }
-        ]
-      },
-      options: {
-        maintainAspectRatio:false,
-                legend:{
-                    display: false,
-                    labels:{
-                        fontStyle:'normal'
-                    }
-                },
-                title:{
-                    fontStyle:'normal'
-                },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }],
-          xAxes: [{
-            type: 'time',
-            ticks: {
-              maxTicksLimit: 3
-                },
-            time: {
-              parser: 'MMM-YYYY',
-              unit: 'year',
-              displayFormats: {
-                 year: 'YYYY'
-              }
-            }
-          }]
-        }
-      }
-    });
+    //specific waste chart
     const initialData = {
       labels: [
         'Biodegradable',
