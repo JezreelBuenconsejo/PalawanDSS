@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\checkUpdateData;
 class viewData extends Controller
 {
     //
@@ -140,6 +140,14 @@ class viewData extends Controller
     function viewMonitoringPage(){
         $user = Auth::id();
 
+        //check update data
+        $check = new checkUpdateData();
+        $updateData = $check->checkUpdateDate();
+        $date_created = DB::select('SELECT date_created FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
+        $databaseDate = Carbon::parse($date_created[0]->date_created);
+        $currentDate = Carbon::now();
+        $dateDiff = DB::select('SELECT `2ndDate` FROM `updateddata` WHERE userID = :user ORDER by `updatedDataID` DESC limit 1',array('user'=>$user));
+        $dateDiff = $currentDate->diffInYears($databaseDate);
         //initial data
         $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
         $bio = ''; $rec=''; $res = ''; $spe = ''; $total=''; $drw = ''; $rer = ''; $pop = ''; $gr = '';$date = '';$time = '';$SA='';$MC='';
@@ -221,7 +229,7 @@ class viewData extends Controller
         //waste date
         $waste = $this->total_waste($bio, $rec, $res, $spe, $total, $pop, $gr,$dateCreated,$time);
 
-        $result = array("initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections,"waste"=>$waste);
+        $result = array("databasedate"=>$databaseDate,"dif"=>$dateDiff,"updateData"=>$updateData,"initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections,"waste"=>$waste);
         
         $resultsEncode = json_encode($result);
         $res = json_decode($resultsEncode);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\checkUpdateData;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dssController;
 use App\Http\Controllers\MailController;
@@ -21,8 +22,6 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
-
-
 Route::get('/sendMail', [MailController::class, 'sendMail']);
 
 Route::get('/mailSent', function () {
@@ -43,5 +42,7 @@ Route::get('/decision', [dssController::class,'result'])->middleware(['auth'])->
 Route::get('/result', [viewData::class,'viewResults'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/records', [dssController::class,'records'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/updateData', [checkUpdateData::class,'viewUpdateData'])->middleware(['auth'])->name('dashboard');
 
 //Route::get('/predict', [dssPredict::class,'predict'])->middleware(['auth'])->name('dashboard');

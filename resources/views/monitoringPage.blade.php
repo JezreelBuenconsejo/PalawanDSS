@@ -2,8 +2,14 @@
     <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
             <div class="container-fluid">
-                <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mt-3" style="font-family: Nunito, sans-serif;">Dashboard</h3><!--<a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>-->
+                <div class=" justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mt-3" style="font-family: Nunito, sans-serif;">Dashboard</h3>
+                    @if ($res->updateData == true)
+                    <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="/updateData">
+                      <i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;
+                      Update Data
+                    </a>
+                    @endif
                 </div>
                 <div class="row">
                   <div class="col-md-6 col-xl-4 mb-4">

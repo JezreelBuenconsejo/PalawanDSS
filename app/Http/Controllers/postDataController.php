@@ -8,8 +8,11 @@ use App\Models\projection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Builder\Param;
 use App\Http\Controllers\dssController;
+use App\Models\updateData;
+
 class postDataController extends Controller
 {
     function addData(Request $req){
@@ -40,6 +43,15 @@ class postDataController extends Controller
         }
 
         $dssdata ->save();
+        $DataID = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by DataID DESC limit 1',array('user'=>$userID));
+        
+        $updateData = new updateData();
+        foreach($DataID as $data){
+            $DID = $data->dataID;
+        }
+        DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `2ndBio`, `2ndRec`, `2ndRes`, `2ndSpe`, `2ndTotal`, `2ndDate`, `4thBio`, `4thRec`, `4thRes`, `4thSpe`, `4thTotal`, `4thDate`, `6thBio`, `6thRec`, `6thRes`, `6thSpe`, `6thTotal`, `6thDate`, `8thBio`, `8thRec`, `8thRes`, `8thSpe`, `8thTotal`, `8thDate`, `10thBio`, `10thRec`, `10thRes`, `10thSpe`, `10thTotal`, `10thDate`) VALUES (:user, :DataID, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$userID,'DataID'=>$DID));
+
+
         return redirect('/decision');
 
     }
