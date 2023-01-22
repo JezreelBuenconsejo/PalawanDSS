@@ -8,12 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class checkUpdateData extends Controller
 {
     function checkDB(){
         $user = Auth::id();
-        
+        $updateData = new updateData();
+        $results = DB::select('SELECT * FROM updateddata WHERE userID = :user',array('user'=>$user));
+
+        if(count($results) == 0){
+            $DataID = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by DataID DESC limit 1',array('user'=>$user));
+            foreach($DataID as $data){
+                $DID = $data->dataID;
+            }
+            DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `2ndBio`, `2ndRec`, `2ndRes`, `2ndSpe`, `2ndTotal`, `2ndDate`, `4thBio`, `4thRec`, `4thRes`, `4thSpe`, `4thTotal`, `4thDate`, `6thBio`, `6thRec`, `6thRes`, `6thSpe`, `6thTotal`, `6thDate`, `8thBio`, `8thRec`, `8thRes`, `8thSpe`, `8thTotal`, `8thDate`, `10thBio`, `10thRec`, `10thRes`, `10thSpe`, `10thTotal`, `10thDate`) VALUES ( :DataID,:user, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$user,'DataID'=>$DID));
+        }
+
     }
     function viewUpdateData(){
     $user = Auth::id();
@@ -31,14 +42,20 @@ class checkUpdateData extends Controller
     
     $updateData = new updateData();
     
-    $secondDate = DB::select('SELECT `2ndDate` FROM `updateddata` WHERE userID = :user ORDER by `updatedDataID` DESC limit 1',array('user'=>$user));
-    $dateSecond = implode($secondDate);
-    $fourthDate = DB::select('SELECT `4thDate` FROM `updateddata` WHERE userID = :user ORDER by `updatedDataID` DESC limit 1',array('user'=>$user));
-    $dateFourth = implode($fourthDate);
-    $sixthDate = DB::select('SELECT `6thDate` FROM `updateddata` WHERE userID = :user ORDER by `updatedDataID` DESC limit 1',array('user'=>$user));
-    $dateSixth = implode($sixthDate);
-    $eighthDate = DB::select('SELECT `8thDate` FROM `updateddata` WHERE userID = :user ORDER by `updatedDataID` DESC limit 1',array('user'=>$user));
-    $dateEigth = implode($eighthDate);
+    $secondDate = DB::table('updateddata')->select('2ndDate')->where('userID', $user)->get();
+    $dateSecond = implode(',', $secondDate->pluck('2ndDate')->toArray());
+
+    $fourthDate = DB::table('updateddata')->select('4thDate')->where('userID', $user)->get();
+    $dateFourth = implode(',', $fourthDate->pluck('4thDate')->toArray());
+
+    $sixthDate = DB::table('updateddata')->select('6thDate')->where('userID', $user)->get();
+    $dateSixth = implode(',', $sixthDate->pluck('6thDate')->toArray());
+
+    $eighthDate = DB::table('updateddata')->select('8thDate')->where('userID', $user)->get();
+    $dateEighth = implode(',', $eighthDate->pluck('8thDate')->toArray());
+
+    
+
     $databaseDate = Carbon::parse($date_created[0]->date_created);
     // Check if the difference; between the current date and the date from the database is 2 years
     switch ($currentDate->diffInYears($databaseDate)) {
@@ -70,7 +87,7 @@ class checkUpdateData extends Controller
             $updateData = true;
             break;
         case 9:
-            if($dateEigth == NULL || $dateEigth == ''){
+            if($dateEighth == NULL || $dateEighth == ''){
                 $updateData = true;
             }
             break;
