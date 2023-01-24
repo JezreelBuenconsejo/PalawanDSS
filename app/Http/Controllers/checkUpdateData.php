@@ -28,9 +28,16 @@ class checkUpdateData extends Controller
     }
     function viewUpdateData(){
     $user = Auth::id();
-    $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
-        $Page = "updateData";
-        return view('dashboard',['Page' => $Page]);
+        $checkUD = new checkUpdateData();
+        if($checkUD == true){
+            $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
+            $Page = "updateData";
+            return view('dashboard',['Page' => $Page]);
+        }
+        else{
+            
+            return redirect('/dashboard');
+        }
     }
     function checkUpdateDate(){
     $user = Auth::id();
