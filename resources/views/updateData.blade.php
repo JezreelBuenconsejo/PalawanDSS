@@ -27,4 +27,3 @@
         </form>
     </div>
 </div>
-<script src="assets/bootstrap/js/UpdateDatabootstrap.min.js"></script>
