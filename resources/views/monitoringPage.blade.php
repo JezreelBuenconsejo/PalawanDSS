@@ -216,10 +216,10 @@
 var myChart = new Chart('wasteBreakdown', {
     type: 'bar',
     data: {
-      labels:['Initial Data','1st Update', '2nd Update', '3rd Update', '4th Update', 'Final Update', 'Final Projection'],
+      labels:['Initial Data','1st Update', '2nd Update', '3rd Update', '4th Update', 'Final Projection'],
         datasets: [{
             label: 'Biodegradable',
-            data: ['{{$res->waste->ibio}}','{{$res->UData[0]->UD2ndBio}}','{{$res->UData[0]->UD4thBio}}','{{$res->UData[0]->UD6thBio}}','{{$res->UData[0]->UD8thBio}}','{{$res->UData[0]->UD10thBio}}','{{$res->waste->pbio}}'],
+            data: ['{{$res->waste->ibio}}','{{$res->UData[0]->UD2ndBio}}','{{$res->UData[0]->UD4thBio}}','{{$res->UData[0]->UD6thBio}}','{{$res->UData[0]->UD8thBio}}','{{$res->waste->pbio}}'],
             backgroundColor: [
                 '#4e73df',
                 '#4e73df',
@@ -242,7 +242,7 @@ var myChart = new Chart('wasteBreakdown', {
         },
         {
             label: 'Recyclable',
-            data: ['{{$res->waste->irec}}','{{$res->UData[0]->UD2ndRec}}','{{$res->UData[0]->UD4thRec}}','{{$res->UData[0]->UD6thRec}}','{{$res->UData[0]->UD8thRec}}','{{$res->UData[0]->UD10thRec}}','{{$res->waste->prec}}'],
+            data: ['{{$res->waste->irec}}','{{$res->UData[0]->UD2ndRec}}','{{$res->UData[0]->UD4thRec}}','{{$res->UData[0]->UD6thRec}}','{{$res->UData[0]->UD8thRec}}','{{$res->waste->prec}}'],
             backgroundColor: [
                 '#1cc88a',
                 '#1cc88a',
@@ -265,7 +265,7 @@ var myChart = new Chart('wasteBreakdown', {
         },
         {
             label: 'Residual',
-            data: ['{{$res->waste->ires}}','{{$res->UData[0]->UD2ndRes}}','{{$res->UData[0]->UD4thRes}}','{{$res->UData[0]->UD6thRes}}','{{$res->UData[0]->UD8thRes}}','{{$res->UData[0]->UD10thRes}}','{{$res->waste->pres}}'],
+            data: ['{{$res->waste->ires}}','{{$res->UData[0]->UD2ndRes}}','{{$res->UData[0]->UD4thRes}}','{{$res->UData[0]->UD6thRes}}','{{$res->UData[0]->UD8thRes}}','{{$res->waste->pres}}'],
             backgroundColor: [
                 '#FDDA0D',
                 '#FDDA0D',
@@ -287,7 +287,7 @@ var myChart = new Chart('wasteBreakdown', {
             borderWidth: 1
         },{
             label: 'Special',
-            data: ['{{$res->waste->ispe}}','{{$res->UData[0]->UD2ndSpe}}','{{$res->UData[0]->UD4thSpe}}','{{$res->UData[0]->UD6thSpe}}','{{$res->UData[0]->UD8thSpe}}','{{$res->UData[0]->UD10thSpe}}','{{$res->waste->pspe}}'],
+            data: ['{{$res->waste->ispe}}','{{$res->UData[0]->UD2ndSpe}}','{{$res->UData[0]->UD4thSpe}}','{{$res->UData[0]->UD6thSpe}}','{{$res->UData[0]->UD8thSpe}}','{{$res->waste->pspe}}'],
             backgroundColor: [
               'rgba(255,0,0,0.64)',
               'rgba(255,0,0,0.64)',

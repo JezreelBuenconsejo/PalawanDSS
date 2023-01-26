@@ -32,7 +32,7 @@ class postDataController extends Controller
         $dssdata ->r1=$req->r1;
         $dssdata ->r2=$req->r2;
         $dssdata ->reduction_efficiency_rating=$req->RER;
-        $dssdata ->years=$req->years;
+        $dssdata ->years=10;
         $dssdata ->diverted_residual_waste=$req->DRW;
 
         $MunicipalClass = $req->municipalClass;
@@ -50,7 +50,7 @@ class postDataController extends Controller
         foreach($DataID as $data){
             $DID = $data->dataID;
         }
-        DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `UD2ndBio`, `UD2ndRec`, `UD2ndRes`, `UD2ndSpe`, `UD2ndTotal`, `UD2ndDate`, `UD4thBio`, `UD4thRec`, `UD4thRes`, `UD4thSpe`, `UD4thTotal`, `UD4thDate`, `UD6thBio`, `UD6thRec`, `UD6thRes`, `UD6thSpe`, `UD6thTotal`, `UD6thDate`, `UD8thBio`, `UD8thRec`, `UD8thRes`, `UD8thSpe`, `UD8thTotal`, `UD8thDate`, `UD10thBio`, `UD10thRec`, `UD10thRes`, `UD10thSpe`, `UD10thTotal`, `UD10thDate`) VALUES (:user, :DataID, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$userID,'DataID'=>$DID));
+        DB::statement("INSERT INTO `updateddata` (`DataID`, `userID`, `UD2ndBio`, `UD2ndRec`, `UD2ndRes`, `UD2ndSpe`, `UD2ndTotal`, `UD2ndDate`, `UD4thBio`, `UD4thRec`, `UD4thRes`, `UD4thSpe`, `UD4thTotal`, `UD4thDate`, `UD6thBio`, `UD6thRec`, `UD6thRes`, `UD6thSpe`, `UD6thTotal`, `UD6thDate`, `UD8thBio`, `UD8thRec`, `UD8thRes`, `UD8thSpe`, `UD8thTotal`, `UD8thDate`, `UD10thBio`, `UD10thRec`, `UD10thRes`, `UD10thSpe`, `UD10thTotal`, `UD10thDate`) VALUES (:DataID, :user, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', NULL);",array('user'=>$userID,'DataID'=>$DID));
 
 
         return redirect('/decision');

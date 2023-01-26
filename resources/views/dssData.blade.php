@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/assets/bootstrap/css/dssDataBootstrap.min.css">
 <link rel="stylesheet" href="/assets/css/Multi-step-form.css">
 <link rel="stylesheet" href="/assets/css/Pretty-Registration-Form-.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
 <script src="/assets/js/dssData.js"></script>
 
 <h2 class="text-center text-wrap" style="margin: 10px;">Decision Support System for Solid Waste Disposal Center</h2>
@@ -85,7 +85,7 @@
                             <div class="row form-group my-1 d-flex justify-content-center">
                                 <div class="col-1 col-sm-5 col-md-4 col-lg-4 col-xl-3 col-xxl-3"><label class="col-form-label"></label></div>
                                 <div class="col-sm-2 col-md-1 col-lg-2 col-xl-2 col-xxl-2"><label class="col-form-label d-flex justify-content-center">Years</label></div>
-                                <div class="col-3 col-sm-2 col-md-2 col-xl-2 col-xxl-2"><input class="form-control" type="text" id="txtYears" required="" name="years"></div>
+                                <div class="col-3 col-sm-2 col-md-2 col-xl-2 col-xxl-2"><input class="form-control" type="text" id="txtYears" required="" value="10" name="years" disabled></div>
                             </div>
                             <div class="row">
                                 <div class="col"><button class="btn btn-dark btn btn-primary js-btn-prev" id="btnPrevRER" type="button" title="Prev">Prev</button></div>
