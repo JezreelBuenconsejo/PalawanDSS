@@ -191,7 +191,7 @@
                     <div class="col-sm-6 col-lg-4">
                         <div class="card text-center clean-card"><img class="card-img-top w-100 d-block" src="assets/img/avatars/311285697_10229023735396845_8983993569082665838_n.jpg">
                             <div class="card-body info" style="padding-right: 0px;padding-left: 0px;height: 293.79px;">
-                                <h4 class="card-title">Dr. Ma. Rosario Aynon V. Arciaga-Gonzales,PhD.<br></h4>
+                                <h4 class="card-title">Engr. Ma. Rosario Aynon V. Arciaga-Gonzales,PhD.<br></h4>
                                 <p class="card-text"><strong>Research Consultant</strong><br>Author of the dissertation titled <br><em>"Decision Support System for Solid Wastes Final Disposal Facility in Small Island Municipalities, Palawan, Philippines"</em><br>University Engineer<br>Palawan State University<br></p>
                                 <div class="icons"><a href="#"><i class="icon-social-facebook"></i></a><a href="#"><i class="icon-social-instagram"></i></a><a href="#"><i class="icon-social-twitter"></i></a></div>
                             </div>
