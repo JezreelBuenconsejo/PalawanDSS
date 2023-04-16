@@ -46,5 +46,6 @@ Route::get('/result', [viewData::class,'viewResults'])->middleware(['auth'])->na
 Route::get('/records', [dssController::class,'records'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/updateData', [checkUpdateData::class,'viewUpdateData'])->middleware(['auth'])->name('dashboard');
+Route::post('/pdf/generate', 'App\Http\Controllers\viewData@generatePDF')->name('pdf.generate');
 
 //Route::get('/predict', [dssPredict::class,'predict'])->middleware(['auth'])->name('dashboard');

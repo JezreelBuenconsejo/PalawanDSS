@@ -5,12 +5,6 @@
             <div class="container-fluid">
                 <div class=" justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mt-3" style="font-family: Nunito, sans-serif;">Dashboard</h3>
-                    <form method="post" action="{{ route('pdf.generate') }}">
-                      @csrf
-                      <button type="submit" class='btn btn-primary'>Generate PDF</button>
-                  </form>
-                  
-
                     @if ($res->updateData->checkUD == 1)
                     <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="/updateData">
                       <i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;
