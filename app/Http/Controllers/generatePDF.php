@@ -114,8 +114,8 @@ class generatePDF extends Controller
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('generatePDF', $data);
             $pdfContent = $pdf->output();
             Mail::send([], [], function ($message) use ($pdfContent) {
-                $message->to('b.jezreel@yahoo.com')
-                        ->subject('DSS Waste Report')
+                $message->to('palawandsswaste@gmail.com')
+                        ->subject('DSS Waste Report by ' . Auth::user()->name . ' | ' . Carbon::now('Asia/Shanghai')->format('F j, Y h:i A'))
                         ->attachData($pdfContent, 'DSSWasteReport.pdf');
             });
             return $pdf->download('DSSWasteReport.pdf');

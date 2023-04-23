@@ -7,7 +7,7 @@
                     <h3 class="text-dark mt-3" style="font-family: Nunito, sans-serif;">Dashboard</h3>
                     <form method="post" action="{{ route('pdf.generate') }}">
                       @csrf
-                      <button type="submit" class='btn btn-primary'>Generate PDF</button>
+                      <button type="submit" class='btn btn-primary' onclick="generate()">Generate PDF</button>
                   </form>
                   
 
@@ -193,6 +193,11 @@
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+<script>
+  function generate() {
+      alert("This PDF file will also be sent to the admin \n Press okay to start downloading");
+  }
+  </script>
 <script>
   function initialWasteProjection() {
   document.getElementById("wastebreakdown").innerHTML = "Initial Data";
