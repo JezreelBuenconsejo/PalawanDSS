@@ -213,6 +213,16 @@
                         You can also contact us on our phone support via call or text message at 0965-446-4832 (TM)
                     <p>
                 @endif
+                @if ($errors->any())
+         <div class="alert alert-danger">
+            <strong>Errors!</strong> <br>
+            <ul>
+               @foreach ($errors->all() as $error)
+               <li>{{ $error }}</li>
+               @endforeach
+            </ul>
+         </div>
+         @endif
                     <div class="mb-3"><label class="form-label" for="name">LGU Name</label>
                         <input class="form-control" type="text" id="name" name="name" required></div>
                     <div class="mb-3"><label class="form-label" for="subject">Subject</label>
@@ -226,7 +236,11 @@
                         <input class="form-control" type="email" id="email" name="email" required></div>
                     <div class="mb-3"><label class="form-label" for="message">Message</label>
                         <textarea class="form-control" id="message" name="messageText" required></textarea></div>
+                        {!! NoCaptcha::renderJs() !!}
+                        {!! NoCaptcha::display() !!}
                     <div class="mb-3"><button class="btn btn-primary" type="submit">Send</button></div>
+                    
+
                 </form>
             </div>
         </section>

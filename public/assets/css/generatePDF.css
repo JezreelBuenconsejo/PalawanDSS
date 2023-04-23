@@ -1,0 +1,41 @@
+td,h5,h3,h2{
+    color:black;
+}
+h2{
+    font-size: 1.5em;
+}
+h3{
+    font-size: 1.1em;
+}
+h4{
+    font-size:1em;
+}
+h5{
+    font-size:16px;
+}
+h6{
+    font-size:0.83em;
+}
+td{
+    font-weight:400;
+}
+.table{
+    border-bottom: 3px solid black;
+    margin-bottom:20px;
+}
+.last-table{
+    border-bottom: 0px !important;
+}
+.last-row{
+    border-bottom: 3px solid black;
+}
+#actual,#estimated,#others{
+    font-weight: 700;
+}
+#reportID-container{
+    margin-bottom:145px;
+}
+.update{
+    margin-bottom:35px;
+    border-bottom: 3px solid black;
+}

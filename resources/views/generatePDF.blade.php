@@ -1,636 +1,472 @@
 
-<div id="wrapper">
-    <div class="d-flex flex-column" id="content-wrapper">
-        <div id="content">
-            <div class="container-fluid">
-                <div class=" justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mt-3" style="font-family: Nunito, sans-serif;">Dashboard</h3>
-                    @if ($res->updateData->checkUD == 1)
-                    <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="/updateData">
-                      <i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;
-                      Update Data
-                    </a>
-                    @endif
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Eco DSS') }}</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    
+    <script src="assets/js/chart.min.js"></script>
+    <!-- Scripts -->
+    <!--@vite(['resources/sass/app.scss', 'resources/js/app.js'])-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/assets/js/result.js"></script>
+</head>
+<body>
+<link rel="stylesheet" href="assets/css/generatePDF.css">
+
+  <!--<h4>Report Details</h4>
+  <h5>Results</h5>
+  <span id="mainRes">Main Result: {{$res->DSSResults->mainRes}}</span> <br>
+  <span id="altRes">Alternative Result: {{$res->DSSResults->altRes}}</span>
+  <h6>Collection Options</h6>
+  <span>Option 1: Collect 50% (Amount in kg/day)</span> <br>
+  <span>Biodegradable: {{$res->DSSResults->op1Bio}} kg per day</span> <br>
+  <span>Recyclable: {{$res->DSSResults->op1Rec}} kg per day</span><br>
+  <span>Option 2: Collect in excess of the estimation (amount in KG/Day)</span> <br>
+  <span>Biodegradable: {{$res->DSSResults->op1Bio}} kg per day</span> <br>
+  <span>Recyclable: {{$res->DSSResults->op1Rec}} kg per day</span>
+  <h5>Projections</h5> -->
+<div class="container card shadow border-start-primary py-2 text-dark" style="margin-bottom: 40px; font-family: Nunito, sans-serif;">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 6px;">
+            <h2>Palawan Decision Support System for Ecological Center of Island Municipalities</h2>
+            <span id="reportID">Report ID: {{$res->pdfData->randID}}</span> <br>
+            <span id="dateIssued">Date Generated: {{$res->pdfData->dateIssued}}</span> <br>
+            <span id="User">User: {{ Auth::user()->name }} </span>
+        </div>
+    </div>
+</div>
+<h2 class="text-center text-uppercase fw-bold" style="margin: 8px; font-family: Nunito, sans-serif;">Results</h2>
+    <div class="container card shadow border-start-primary py-2 text-dark" style="margin-bottom: 40px; font-family: Nunito, sans-serif;">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 6px;">
+                <h3 id="" style="font-weight:700">Main Result: Ecology Center with Category {{$res->DSSResults->mainRes}}</h3>
+                <h5 id=""style="font-weight:700">Alternative Result: {{$res->DSSResults->altRes}}</h5>
+                <h5 id="" style="color: red">{{$res->DSSResults->comment}}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 12px;">
+                <h3 id="option1">Option 1: Collect 50% (amount in KG/Day)</h3>
+                <h5 id="option1Bio">Biodegradable: {{$res->DSSResults->op1Bio}}</h5>
+                <h5 id="option1Rec">Recyclable: {{$res->DSSResults->op1Rec}}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 id="option1">Option 2: Collect in excess of the estimation (amount in KG/Day)</h3>
+                <h5 id="option2Bio">Biodegradable: {{$res->DSSResults->op2Bio}}</h5>
+                <h5 id="option2Rec">Recyclable: {{$res->DSSResults->op2Rec}}</h5>
+            </div>
+        </div>
+    </div>
+    <h3 class="text-center text-uppercase fw-bold" style="margin: 8px;font-family: Nunito, sans-serif;">Projections</h3>
+    <div class="container card shadow border-start-primary py-2 text-dark" style="margin-bottom: 20px; font-family: Nunito, sans-serif;">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 id="projectedResult">Ecology Center with Category {{$res->projections->projectedResult}} in {{$res->projections->finalYear}} ({{$res->DSSResults->time}} years)</h3>
+                <h6 id="projectedComment" style="color: red">{{$res->projections->projectedComments}}</h6>
+            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="projectedPopulation">
+                <h5>Projected Population: {{$res->projections->projectedPop}}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h5 id="projectedRes">Projected Residual Waste: {{$res->projections->projectedRes}} KG/Day</h5>
+                <h5 id="projectedDRW">Projected Diverted Residual Waste: {{$res->projections->projectedDRW}} KG/Day</h5>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container py-5 fw-bold"  style="margin-top:185px;font-family: Nunito, sans-serif;">
+        <h3 class="text-center text-uppercase fw-bold" style="margin: 8px;font-family: Nunito, sans-serif;">Details</h3>
+        <div class="row text-center justify-content-center last-row">
+            <div class="col-lg-2" id="identifier">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody style="margin-top: 38px;">
+                            <tr>
+                                <td style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-right: 0px;padding-left: 0px;">Residual</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-right: 0px;padding-left: 0px;">Special</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
                 </div>
-                <div class="row">
-                  <div class="col-md-6 col-xl-4 mb-4">
-                      <div class="card shadow border-start-primary py-2">
-                          <div class="card-body">
-                              <div class="row align-items-center no-gutters">
-                                  <div class="col">
-                                      <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>main result</span></div>
-                                      <div class="text-dark fw-bold h5 mb-0"><span>Ecology Center with  {{$res->initialResult->mainRes}}</span></div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  @if ($res->initialResult->showAltRes == false)
-                  @else
-                  <div class="col-md-6 col-xl-4 mb-4">
-                    <div class="card shadow border-start-primary py-2">
-                        <div class="card-body">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col">
-                                    <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Alternative Result</span></div>
-                                    <div class="text-dark fw-bold h5 mb-0"><span>{{$res->initialResult->altRes}}</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-11 col-md-4 col-lg-2">
+                <h5 class="text-center" id="actual" style="margin-bottom: 0px;">Actual kg/day</h5>
+                <h5 class="text-center" style="margin: 0px;"></h5>
+                <h5 class="text-center">(total)</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
+                                <td id="actualBio">{{$res->CurrentData->bio}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
+                                <td id="actualRec">{{$res->CurrentData->rec}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Residual</td>
+                                <td id="actualRes">{{$res->CurrentData->res}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Special</td>
+                                <td id="actualSpe">{{$res->CurrentData->spe}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2">Total</td>
+                                <td id="actualTotal">{{$res->CurrentData->total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                  @endif
-                  
-                  <div class="col-md-6 col-xl-4 mb-4">
-                      <div class="card shadow border-start-success py-2">
-                          <div class="card-body">
-                              <div class="row align-items-center no-gutters">
-                                  <div class="col">
-                                      <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>projected result</span></div>
-                                      <div class="text-dark fw-bold h5 mb-0"><span>{{$res->projections->projectedResult}}</span></div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-4 col-xxl-3 mb-4">
-                    <div class="card shadow border-start-info py-2">
-                        <div class="card-body">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col-lg-12 col-xl-12">
-                                    <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Progress</span></div>
-                                    <div class="row g-0 align-items-center d-flex justify-content-center">
-                                        <div class="col-auto">
-                                            <div class="text-dark fw-bold h5 mb-0 me-2"><span>{{$res->initialResult->startYear}}</span></div>
-                                        </div>
-                                        <div class="col-7 col-sm-9 col-md-8 col-lg-10 col-xl-8 col-xxl-7">
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-info" aria-valuenow="{{$res->progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$res->progress}}%;"><span class="visually-hidden"></span></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="text-dark fw-bold h5 mb-0 ms-2"><span>{{$res->projections->finalYear}}</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-11 col-md-4 col-lg-2">
+                <h5 class="text-center" id="estimated" style="margin-bottom: 0px;">Estimated kg/day</h5>
+                <h5 class="text-center">(total)</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
+                                <td id="estimatedTotalBio">{{$res->estimationTotal->estimatedBio}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
+                                <td id="estimatedTotalRec">{{$res->estimationTotal->estimatedRec}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Residual</td>
+                                <td id="estimatedTotalRes">{{$res->estimationTotal->estimatedRes}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Special</td>
+                                <td id="estimatedTotalSpe">{{$res->estimationTotal->estimatedSpe}}</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2">Total</td>
+                                <td id="estimatedTotal">{{$res->estimationTotal->estimatedTotal}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-              </div>
-              <div class="row">
-                    <div class="col-lg-12 col-xl-12">
-                        <div class="card shadow mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Residual and Projected Residual Waste</h6>
-                                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                        <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area"><canvas id='residualWaste'></canvas></div>
-                            </div>
-                        </div>
-                        <div class="card shadow mb-4">
-                          <div class="card-header d-flex justify-content-between align-items-center">
-                              <h6 class="text-primary fw-bold m-0">Projected Total Waste</h6>
-                              <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle"    aria-expanded="false" data-bs-toggle="dropdown" type="button"></button>
-                                <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                    <div class="dropdown-divider">
-                                    </div>
-                                    <a class="dropdown-item" href="#">&nbsp;Something else here</a>
-                                </div>
-                              </div>
-                          </div>
-                        <div class="card-body">
-                          <div class="chart-area">
-                            <canvas id="projectedWaste"></canvas>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="card shadow mb-4">
-                      <div class="card-header d-flex justify-content-between align-items-center">
-                          <h6 class="text-primary fw-bold m-0">Waste Breakdown</h6>
-                          <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle"    aria-expanded="false" data-bs-toggle="dropdown" type="button"></button>
-                            <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                <div class="dropdown-divider">
-                                </div>
-                                <a class="dropdown-item" href="#">&nbsp;Something else here</a>
-                            </div>
-                          </div>
-                      </div>
-                    <div class="card-body">
-                      <div class="chart-area">
-                        <canvas id="wasteBreakdown"></canvas>
-                      </div>
-                    </div>
+            </div>
+            <div class="col-11 col-md-4 col-lg-2">
+                <h5 class="text-center" id="estimated" style="margin-bottom: 0px;">Estimated kg/day </h5>
+                <h5 class="text-center">(per capita)</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;width: 134.854px;">Biodegradable</td>
+                                <td id="estimatedPerCapBio">{{$res->estimationPerCapita->perCapitaBio}} ({{$res->estimationPerCapita->percentBio}}%)</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Recyclable</td>
+                                <td id="estimatedPerCapRec">{{$res->estimationPerCapita->perCapitaRec}} ({{$res->estimationPerCapita->percentRec}}%)</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Residual</td>
+                                <td id="estimatedPerCapRes">{{$res->estimationPerCapita->perCapitaRes}} ({{$res->estimationPerCapita->percentRes}}%)</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2" style="padding-right: 0px;padding-left: 0px;">Special</td>
+                                <td id="estimatedPerCapSpe">{{$res->estimationPerCapita->perCapitaSpe}} ({{$res->estimationPerCapita->percentSpe}}%)</td>
+                            </tr>
+                            <tr>
+                                <td id="identifiers2">Total</td>
+                                <td id="estimatedPerCapTotal">{{$res->estimationPerCapita->perCapitaTotal}} (100%)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                  </div>
-                    <div class="col-lg-7 col-xl-8">
-                      <div class="card shadow mb-4">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="text-primary fw-bold m-0">Projected Population</h6>
-                            <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                    <div class="dropdown-divider">
-                                    </div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-area">
-                              <canvas id="projectedPopulation"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    <div class="col-lg-5 col-xl-4">
-                        <div class="card shadow mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0" id="wastebreakdown">Initial Data</h6>
-                                <div class="dropdown no-arrow"><button class="btn btn-link dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor" class="text-gray-400" style="font-size: 24px;">
-                                            <path d="M128 192C110.3 192 96 177.7 96 160C96 142.3 110.3 128 128 128C145.7 128 160 142.3 160 160C160 177.7 145.7 192 128 192zM200 160C200 146.7 210.7 136 224 136H448C461.3 136 472 146.7 472 160C472 173.3 461.3 184 448 184H224C210.7 184 200 173.3 200 160zM200 256C200 242.7 210.7 232 224 232H448C461.3 232 472 242.7 472 256C472 269.3 461.3 280 448 280H224C210.7 280 200 269.3 200 256zM200 352C200 338.7 210.7 328 224 328H448C461.3 328 472 338.7 472 352C472 365.3 461.3 376 448 376H224C210.7 376 200 365.3 200 352zM128 224C145.7 224 160 238.3 160 256C160 273.7 145.7 288 128 288C110.3 288 96 273.7 96 256C96 238.3 110.3 224 128 224zM128 384C110.3 384 96 369.7 96 352C96 334.3 110.3 320 128 320C145.7 320 160 334.3 160 352C160 369.7 145.7 384 128 384zM0 96C0 60.65 28.65 32 64 32H512C547.3 32 576 60.65 576 96V416C576 451.3 547.3 480 512 480H64C28.65 480 0 451.3 0 416V96zM48 96V416C48 424.8 55.16 432 64 432H512C520.8 432 528 424.8 528 416V96C528 87.16 520.8 80 512 80H64C55.16 80 48 87.16 48 96z"></path>
-                                        </svg></button>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                        <a class="dropdown-item"
-                                        onclick="initialWasteProjection();">Initial data</a>
-                                        <a class="dropdown-item"
-                                        onclick="currentWasteProjection();">Current projection</a>
-                                        <a class="dropdown-item"
-                                        onclick="finalWasteProjection();">Final projection</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                  <canvas id="initialWaste"></canvas>
-                                  <canvas id="currentWaste" style="display: none"></canvas>
-                                  <canvas id="finalWaste" style="display: none"></canvas>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div class="row text-center d-flex justify-content-center">
+                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xxl-4">
+                    <h5 class="text-center" id="others">Other Details</h5>
+                    <div class="table-responsive">
+                        <table class="table last-table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="">Diverted Residual Waste</td>
+                                    <td id="growthRate">{{$res->CurrentData->drw}} KG/Day</td>
+                                </tr>
+                                <tr>
+                                    <td style="">Current Population</td>
+                                    <td id="option2Bio-1">{{$res->CurrentData->pop}}<br /></td>
+                                </tr>
+                                <tr>
+                                    <td style="">Growth Rate</td>
+                                    <td id="growthRate">{{$res->CurrentData->gr}}%</td>
+                                </tr>
+                                <tr>
+                                    <td style="">Reduction Efficiency Rating</td>
+                                    <td id="">{{$res->CurrentData->rer}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="">Social Acceptability</td>
+                                    <td id="">{{$res->CurrentData->SA}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="">Municipal Classification</td>
+                                    <td id="">{{$res->CurrentData->MC}}</td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Palawan DSS 2022</span></div>
-                
+    </div>
+    <div id="reportID-container">
+        <span id="reportID" >Report ID: {{$res->pdfData->randID}}</span>
+    </div>
+    
+    <div class="container py-2 fw-bold"  style="font-family: Nunito, sans-serif;">
+        <div class="row text-center d-flex justify-content-center">
+            <h3 class="text-center text-uppercase fw-bold" style="margin: 8px;font-family: Nunito, sans-serif;">Updates</h3>
+            <div class="col-6 update">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                1st Update
+                            </td>
+                        </tr> 
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Biodegradable: </td>
+                            @if ($res->UData[0]->UD2ndBio != 0 || $res->UData[0]->UD2ndBio != null)
+                            <td>{{$res->UData[0]->UD2ndBio}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Recyclable: </td>
+                            @if ($res->UData[0]->UD2ndRec != 0 || $res->UData[0]->UD2ndRec != null)
+                            <td>{{$res->UData[0]->UD2ndRec}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Residual: </td>
+                            @if ($res->UData[0]->UD2ndRes != 0 || $res->UData[0]->UD2ndRes != null)
+                            <td>{{$res->UData[0]->UD2ndRes}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Special: </td>
+                            @if ($res->UData[0]->UD2ndSpe != 0 || $res->UData[0]->UD2ndSpe != null)
+                            <td>{{$res->UData[0]->UD2ndSpe}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-</div>
-<script>
-  function initialWasteProjection() {
-  document.getElementById("wastebreakdown").innerHTML = "Initial Data";
-  document.getElementById("initialWaste").style.display = "flex";
-  document.getElementById("currentWaste").style.display = "none"
-  document.getElementById("finalWaste").style.display = "none";
-  myBarChart.update();
-}  
-
-  function currentWasteProjection() {
-  document.getElementById("wastebreakdown").innerHTML = "Current Projection";
-  document.getElementById("initialWaste").style.display = "none";
-  document.getElementById("currentWaste").style.display = "flex"
-  document.getElementById("finalWaste").style.display = "none";
-}  
-
-  function finalWasteProjection() {
-  document.getElementById("wastebreakdown").innerHTML = "Final Projection";
-  document.getElementById("initialWaste").style.display = "none";
-  document.getElementById("currentWaste").style.display = "none"
-  document.getElementById("finalWaste").style.display = "flex";
-}
-</script>
-
-<script>
-  const totalWaste = [{label: "Initial Data", TW: '{{$res->waste->itotal}}'}, {label:"Final Projection", TW: "{{$res->waste->ptotal}}"}];
-var myChart = new Chart('wasteBreakdown', {
-    type: 'bar',
-    data: {
-      labels:['Initial Data','1st Update', '2nd Update', '3rd Update', '4th Update', 'Final Projection'],
-        datasets: [{
-            label: 'Biodegradable',
-            data: ['{{$res->waste->ibio}}','{{$res->UData[0]->UD2ndBio}}','{{$res->UData[0]->UD4thBio}}','{{$res->UData[0]->UD6thBio}}','{{$res->UData[0]->UD8thBio}}','{{$res->waste->pbio}}'],
-            backgroundColor: [
-                '#4e73df',
-                '#4e73df',
-                '#4e73df',
-                '#4e73df',
-                '#4e73df',
-                '#4e73df',
-                '#4e73df'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
-            ],
-            borderWidth: 1
-        },
-        {
-            label: 'Recyclable',
-            data: ['{{$res->waste->irec}}','{{$res->UData[0]->UD2ndRec}}','{{$res->UData[0]->UD4thRec}}','{{$res->UData[0]->UD6thRec}}','{{$res->UData[0]->UD8thRec}}','{{$res->waste->prec}}'],
-            backgroundColor: [
-                '#1cc88a',
-                '#1cc88a',
-                '#1cc88a',
-                '#1cc88a',
-                '#1cc88a',
-                '#1cc88a',
-                '#1cc88a'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
-            ],
-            borderWidth: 1
-        },
-        {
-            label: 'Residual',
-            data: ['{{$res->waste->ires}}','{{$res->UData[0]->UD2ndRes}}','{{$res->UData[0]->UD4thRes}}','{{$res->UData[0]->UD6thRes}}','{{$res->UData[0]->UD8thRes}}','{{$res->waste->pres}}'],
-            backgroundColor: [
-                '#FDDA0D',
-                '#FDDA0D',
-                '#FDDA0D',
-                '#FDDA0D',
-                '#FDDA0D',
-                '#FDDA0D',
-                '#FDDA0D'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
-            ],
-            borderWidth: 1
-        },{
-            label: 'Special',
-            data: ['{{$res->waste->ispe}}','{{$res->UData[0]->UD2ndSpe}}','{{$res->UData[0]->UD4thSpe}}','{{$res->UData[0]->UD6thSpe}}','{{$res->UData[0]->UD8thSpe}}','{{$res->waste->pspe}}'],
-            backgroundColor: [
-              'rgba(255,0,0,0.64)',
-              'rgba(255,0,0,0.64)',
-              'rgba(255,0,0,0.64)',
-              'rgba(255,0,0,0.64)',
-              'rgba(255,0,0,0.64)',
-              'rgba(255,0,0,0.64)',
-              'rgba(255,0,0,0.64)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
-            ],
-            borderWidth: 1
-        },
-        {
-            label: 'Total',
-            data: totalWaste.map(o => ({ x: o.label, y: Number(o.TW)})),
-            fill:false,
-            backgroundColor: [
-                '#000000'
-            ],
-            borderColor: [
-                '#000000'
-            ],
-            borderWidth: 1,
-            type:'line',
-            
-            
-        }
-      ]
-    },
-    options: {
-      
-      maintainAspectRatio:false,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                },
-                stacked: true
-            }],
-            xAxes: [{
-              ticks: {
-                    beginAtZero: true,
-                    min:1
-                },                
-                stacked: true
-            }]
-        }
-    }
-});
-myChart.data.datasets[4].hidden = true;
-myChart.update();
-</script>
-
-<script>
-    const residual = [{label: "{{$res->dates->initialDate}}", res: "{{$res->initialInput->res}}"}, {label: "{{$res->dates->currentDate}}", res: "{{$res->currentProjections->projectedRes}}"},{label: "{{$res->dates->finalDate}}", res: "{{$res->projections->projectedRes}}"}];
-    const DRW1 = [{label: "{{$res->dates->initialDate}}", DRW: "{{$res->initialInput->drw}}"},{label: "{{$res->dates->currentDate}}", DRW: "{{$res->currentProjections->projectedDRW}}"},{label: "{{$res->dates->finalDate}}", DRW: "{{$res->projections->projectedDRW}}"}];
-    const Population = [{label: "{{$res->dates->initialDate}}", pop: "{{$res->initialInput->pop}}"},{label: "{{$res->dates->currentDate}}", pop: "{{$res->currentProjections->projectedPop}}"},{label: "{{$res->dates->finalDate}}", pop: "{{$res->projections->projectedPop}}"}];
-    const waste = [{label: "{{$res->dates->initialDate}}", w: "{{$res->waste->itotal}}"},{label: "{{$res->dates->currentDate}}", w: "{{$res->waste->ctotal}}"},{label: "{{$res->dates->finalDate}}", w: "{{$res->waste->ptotal}}"}];
-
+            <div class="col-6 update">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                2nd Update
+                            </td>
+                        </tr> 
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Biodegradable: </td>
+                            @if ($res->UData[0]->UD4thBio != 0 || $res->UData[0]->UD4thBio != null)
+                            <td>{{$res->UData[0]->UD4thBio}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Recyclable: </td>
+                            @if ($res->UData[0]->UD4thRec != 0 || $res->UData[0]->UD4thRec != null)
+                            <td>{{$res->UData[0]->UD4thRec}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Residual: </td>
+                            @if ($res->UData[0]->UD4thRes != 0 || $res->UData[0]->UD4thRes != null)
+                            <td>{{$res->UData[0]->UD4thRes}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Special: </td>
+                            @if ($res->UData[0]->UD4thSpe != 0 || $res->UData[0]->UD4thSpe != null)
+                            <td>{{$res->UData[0]->UD4thSpe}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 update">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                3rd Update
+                            </td>
+                        </tr> 
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Biodegradable: </td>
+                            @if ($res->UData[0]->UD6thBio != 0 || $res->UData[0]->UD6thBio != null)
+                            <td>{{$res->UData[0]->UD6thBio}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Recyclable: </td>
+                            @if ($res->UData[0]->UD6thRec != 0 || $res->UData[0]->UD6thRec != null)
+                            <td>{{$res->UData[0]->UD6thRec}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Residual: </td>
+                            @if ($res->UData[0]->UD6thRes != 0 || $res->UData[0]->UD6thRes != null)
+                            <td>{{$res->UData[0]->UD6thRes}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Special: </td>
+                            @if ($res->UData[0]->UD6thSpe != 0 || $res->UData[0]->UD6thSpe != null)
+                            <td>{{$res->UData[0]->UD6thSpe}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 update">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                4th Update
+                            </td>
+                        </tr> 
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Biodegradable: </td>
+                            @if ($res->UData[0]->UD8thBio != 0 || $res->UData[0]->UD8thBio != null)
+                            <td>{{$res->UData[0]->UD8thBio}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Recyclable: </td>
+                            @if ($res->UData[0]->UD8thRec != 0 || $res->UData[0]->UD8thRec != null)
+                            <td>{{$res->UData[0]->UD8thRec}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Residual: </td>
+                            @if ($res->UData[0]->UD8thRes != 0 || $res->UData[0]->UD8thRes != null)
+                            <td>{{$res->UData[0]->UD8thRes}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Special: </td>
+                            @if ($res->UData[0]->UD8thSpe != 0 || $res->UData[0]->UD8thSpe != null)
+                            <td>{{$res->UData[0]->UD8thSpe}} kg</td>
+                            @else
+                            <td>No Data Available</td>
+                            @endif
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     
-    //residual chart
-    new Chart("residualWaste", {
-      type: 'line',
-      data: {
-        datasets: [{
-            label: "Residual Waste",
-            fill: false,
-            data: residual.map(o => ({ x: o.label, y: Number(o.res)})),
-            backgroundColor:'rgba(78, 115, 223, 1)',
-            borderColor:'rgba(78, 115, 223, 1)'
-          },
-          {
-            label: "Diverted Residual Waste",
-            fill: false,
-            data: DRW1.map(o => ({ x: o.label, y: Number(o.DRW)})),
-            backgroundColor:'rgba(255,0,0,0.64)',
-            borderColor:'rgba(255,0,0,0.64)'
-          }
-
-        ]
-      },
-      options: {
-        maintainAspectRatio:false,
-                legend:{
-                    labels:{
-                        fontStyle:'normal'
-                    }
-                },
-                title:{
-                    fontStyle:'normal'
-                },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }],
-          xAxes: [{
-            type: 'time',
-            barPercentage: 0.4,
-            ticks: {
-              maxTicksLimit: 3
-                },
-            time: {
-              parser: 'MMM-YYYY',
-              unit: 'year',
-              displayFormats: {
-                 year: 'YYYY'
-              }
-            }
-          }]
-        }
-      }
-    });
-
-    //Total waste chart
-    new Chart("projectedWaste", {
-      type: 'bar',
-      data: {
-        datasets: [{
-            label: "Total Waste",
-            fill: false,
-            data: waste.map(o => ({ x: o.label, y: Number(o.w)})),
-            backgroundColor:'rgba(78, 115, 223, 1)',
-            borderColor:'rgba(78, 115, 223, 1)',
-            type:'line'
-          }
-        ]
-      },
-      options: {
-        maintainAspectRatio:false,
-                legend:{
-                    labels:{
-                        fontStyle:'normal'
-                    }
-                },
-                title:{
-                    fontStyle:'normal'
-                },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }],
-          xAxes: [{
-            type: 'time',
-            barPercentage: 5.5,
-            ticks: {
-              maxTicksLimit: 3
-                },
-            time: {
-              parser: 'MMM-YYYY',
-              unit: 'year',
-              displayFormats: {
-                 year: 'YYYY'
-              }
-            }
-          }]
-        }
-      }
-    });
-    // population  chart
-    new Chart("projectedPopulation", {
-      type: 'line',
-      data: {
-        datasets: [{
-            label: "Population",
-            fill: false,
-            data: Population.map(o => ({ x: o.label, y: Number(o.pop)})),
-            backgroundColor:'rgba(78, 115, 223, 1)',
-            borderColor:'rgba(78, 115, 223, 1)'
-          }
-        ]
-      },
-      options: {
-        maintainAspectRatio:false,
-                legend:{
-                    display: false,
-                    labels:{
-                        fontStyle:'normal'
-                    }
-                },
-                title:{
-                    fontStyle:'normal'
-                },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }],
-          xAxes: [{
-            type: 'time',
-            ticks: {
-              maxTicksLimit: 3
-                },
-            time: {
-              parser: 'MMM-YYYY',
-              unit: 'year',
-              displayFormats: {
-                 year: 'YYYY'
-              }
-            }
-          }]
-        }
-      }
-    });
-
-    //specific waste chart
-    const initialData = {
-      labels: [
-        'Biodegradable',
-        'Recyclable',
-        'Residual',
-        'Special'
-      ],
-      datasets: [{
-        label: 'Initial Waste',
-        data: ['{{$res->waste->ibio}}', '{{$res->waste->irec}}', '{{$res->waste->ires}}','{{$res->waste->ispe}}'],
-        backgroundColor: [
-          '#4e73df',
-          '#1cc88a',
-          '#36b9cc',
-          'rgba(255,0,0,0.64)'
-        ],
-        hoverOffset: 4
-      }]
-    };
+    <div id="reportID-container">
+        <span id="reportID" >Report ID: {{$res->pdfData->randID}}</span>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     
-    const currentData = {
-      labels: [
-        'Biodegradable',
-        'Recyclable',
-        'Residual',
-        'Special'
-      ],
-      datasets: [{
-        label: 'Current Projection',
-        data: ['{{$res->waste->cbio}}', '{{$res->waste->crec}}', '{{$res->waste->cres}}','{{$res->waste->cspe}}'],
-        backgroundColor: [
-          '#1cc88a',  
-          '#4e73df',
-          'rgba(255,0,0,0.64)',
-          '#36b9cc',
-        ],
-        hoverOffset: 4
-      }]
-    };
-    
-    const finalData = {
-      labels: [
-        'Biodegradable',
-        'Recyclable',
-        'Residual',
-        'Special'
-      ],
-      datasets: [{
-        label: 'Final Projection',
-        data: ['{{$res->waste->pbio}}', '{{$res->waste->prec}}', '{{$res->waste->pres}}','{{$res->waste->pspe}}'],
-        backgroundColor: [
-          '#36b9cc',
-          'rgba(255,0,0,0.64)',
-          '#4e73df',          
-          '#1cc88a',
-        ],
-        hoverOffset: 4
-      }]
-    };
-
-    new Chart("initialWaste", {
-      type: 'doughnut',
-      data: initialData,
-      options: {
-            maintainAspectRatio:false
-      }
-    });
-    
-    new Chart("currentWaste", {
-      type: 'doughnut',
-      data: currentData,
-      options: {
-            maintainAspectRatio:false
-      }
-    });
-    
-    new Chart("finalWaste", {
-      type: 'doughnut',
-      data: finalData,
-      options: {
-            maintainAspectRatio:false
-      }
-    });
-    /*const ctx = document.getElementById('myChart');
-
-new Chart(ctx, 
-    {
-        type:'line',
-        data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],
-            datasets:[{
-                label:'Earnings',
-                fill:true,
-                data:[0,10000,1232,15000,10000,20000,15000,25000],
-                backgroundColor:'rgba(78, 115, 223, 0.05)',
-                borderColor:'rgba(78, 115, 223, 1)'
-            }]
-        },
-        options:{
-            maintainAspectRatio:false,
-            legend:{
-                display:false,
-                labels:{
-                    fontStyle:'normal'
-                }
-            },
-            title:{
-                fontStyle:'normal'
-            },
-            tooltips: {
-       filter: function (tooltipItem, data) {
-           var label = data.labels[tooltipItem.index];
-           if (label == "Feb") {
-             return false;
-           } else {
-             return true;
-           }
-       }
-    },
-            scales: {
-      xAxes: [{
-        ticks: {
-          maxTicksLimit: 1
-            }
-        }]
-        }
-        }
-    });*/
-</script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Multi-step-form.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/theme.js"></script>
+    </body>
+    </html>

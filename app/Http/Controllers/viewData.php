@@ -7,9 +7,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\checkUpdateData;
+use Illuminate\Support\Str;
 use App\Models\updateData;
     use Dompdf\Dompdf;
     use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Date;
 
 class viewData extends Controller
 {
@@ -352,111 +354,6 @@ class viewData extends Controller
         return $CW;
     }
 
-public function generatePDF()
-{
-    $user = Auth::id();
-
-        //check update data
-        $check = new checkUpdateData();
-        $check->checkDB();
-        $updateData = $check->checkUpdateDate();
-
-        $UData = $check->retrieveData();
-        
-        //initial data
-        $dssData = DB::select('SELECT * FROM `dssdata` WHERE user_id = :user ORDER by date_created DESC limit 1',array('user'=>$user));
-        $bio = ''; $rec=''; $res = ''; $spe = ''; $total=''; $drw = ''; $rer = ''; $pop = ''; $gr = '';$date = '';$time = '';$SA='';$MC='';
-        foreach($dssData as $data){
-            $bio = $data->biodegradable;
-            $rec = $data->recyclable;
-            $res = $data->residual;
-            $spe = $data->special;
-            $total = $data->total_waste;
-            $drw = $data->diverted_residual_waste;
-            $rer = $data->reduction_efficiency_rating;
-            $time = $data->years;
-            $pop = $data->population;
-            $gr = $data->growth_rate;
-            $date = $data->date_created;
-            $SA = $data->social_acceptability;
-            $MC = $data->municipal_classification;
-        }
-        $initialInput = array("bio"=>$bio,'rec'=>$rec,'res'=>$res,'spe'=>$spe,'total'=>$total,'gr'=>$gr,'pop'=>$pop,'drw'=>$drw,'date'=>$date,'time'=>$time);
-        
-
-        //inital results
-        $dssResults = DB::select('SELECT * FROM `results` WHERE userID = :user ORDER by date_created DESC limit 1',array('user'=>$user));
-        $mainRes = ''; $altRes = ''; $op1Bio = ''; $op1Rec = ''; $op2Bio = ''; $op2Rec = ''; $comment = ''; $dateCreated = '';
-        foreach($dssResults as $data){
-            $mainRes = $data->MainResult;
-            $dateCreated = $data->date_created;
-            $altRes = $data->AlternativeResult;
-
-        }
-        $dateCreated = new Carbon($dateCreated);
-        $startYear = $dateCreated->year;
-        $showAltRes = false;
-        if($altRes == " " || $altRes == null){
-            $showAltRes = false;
-        }
-        else{
-            $showAltRes = true;
-        }
-        $initialResult = array("mainRes" =>"Category ". $mainRes, "altRes"=>$altRes,"startYear" => $startYear, "showAltRes"=>$showAltRes);
-
-        //projected results
-        $dssProjections = DB::select('SELECT * FROM `projection` WHERE userID = :user ORDER by start_date DESC limit 1',array('user'=>$user));
-        $projectedResult = '';$projectedPop = '';$projectedRes = '';$projectedDRW = '';$startDate = '';$finalDate = ''; $finalYear = ''; $projectedComments = '';
-        foreach($dssProjections as $data){
-            $projectedResult = $data->projected_result;
-            $projectedPop = $data->projected_population;
-            $projectedRes = $data->projected_residual_waste;
-            $projectedDRW = $data->projected_DRW;
-            $finalDate = $data->finalDate;
-            $finalYear = $data->finalYear;
-        }
-        $projections = array("projectedResult"=>"Category ".$projectedResult,"projectedPop"=>$projectedPop,"projectedRes"=>$projectedRes,"projectedDRW"=>$projectedDRW,"finalYear"=>$finalYear);
-
-        //progress bar
-        $curYear = date('Y');
-        $totalYear = $finalYear - $startYear;
-        $yrspassed = $curYear - $startYear;
-        $percent = ($yrspassed / $totalYear) * 100;
-
-        //Date parsing for line chart
-        //initial year
-        $startMonth = $dateCreated->format("M");
-        $initialDate = $startMonth . "-" . $startYear;
-        //final year
-        $finalDate = new Carbon($finalDate);
-        $finalMonth = $finalDate->format("M");
-        $finalD = $finalMonth . '-' . $finalYear;
-        //current year
-        $currentMonth = date("M");
-        $currentYear = date("Y");
-        $currentDate = $currentMonth . '-' . $currentYear;
-
-        $dates = array("initialDate" => $initialDate,"finalDate"=>$finalD,"currentDate"=>$currentDate);
-
-        //current projections
-        $currentProjections = $this->current_projections($total,$res,$pop,$gr,$rer,$dateCreated);
-
-        //waste date
-        $waste = $this->total_waste($bio, $rec, $res, $spe, $total, $pop, $gr,$dateCreated,$time);
-
-        $result = array('UData'=>$UData,"updateData"=>$updateData,"initialInput"=>$initialInput,"initialResult" => $initialResult,"projections"=>$projections, "progress" => $percent,"dates"=>$dates,"currentProjections"=>$currentProjections,"waste"=>$waste);
-        
-        $resultsEncode = json_encode($result);
-        $res = json_decode($resultsEncode);
-        $data = [
-            'title' => 'Sample PDF File',
-            'content' => 'This is a sample PDF file generated from Laravel.',
-            'res' => $res
-        ];
     
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('generatePDF', $data);
-    
-        return $pdf->download('sample.pdf');
-}
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\dssController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\postDataController;
 use App\Http\Controllers\viewData;
+use App\Http\Controllers\generatePDF;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,6 @@ Route::get('/result', [viewData::class,'viewResults'])->middleware(['auth'])->na
 Route::get('/records', [dssController::class,'records'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/updateData', [checkUpdateData::class,'viewUpdateData'])->middleware(['auth'])->name('dashboard');
-Route::post('/pdf/generate', 'App\Http\Controllers\viewData@generatePDF')->name('pdf.generate');
+Route::post('/generatePDF', [generatePDF::class,'generatePDF'])->name('pdf.generate');
 
 //Route::get('/predict', [dssPredict::class,'predict'])->middleware(['auth'])->name('dashboard');
