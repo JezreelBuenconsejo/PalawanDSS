@@ -27,7 +27,7 @@ class CheckIfAdmin
      */
     private function checkIfUserIsAdmin($user)
     {
-        if($user->email == "b.jezreel@yahoo.com" || $user->email == "jesfert.pabon.jp@gmail.com"){
+        if($user->role_id == 1){
             return true;
         }
         // return ($user->is_admin == 1);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Roles;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -63,6 +64,7 @@ class UserCrudController extends CrudController
         CRUD::field('name')->validationRules('required|min:5');
         CRUD::field('email')->validationRules('required|email|unique:users,email');
         CRUD::field('password')->validationRules('required');
+        CRUD::field('role_id')->type('select_from_array')->options(Roles::pluck('name', 'id')->toArray())->label('Role');
 
         \App\Models\User::creating(function ($entry) {
             $entry->password = \Hash::make($entry->password);
@@ -85,6 +87,7 @@ class UserCrudController extends CrudController
         CRUD::field('name')->validationRules('required|min:5');
         CRUD::field('email')->validationRules('required|email|unique:users,email,'.CRUD::getCurrentEntryId());
         CRUD::field('password')->hint('Type a password to change it.');
+        CRUD::field('role_id')->type('select_from_array')->options(Roles::pluck('name', 'id')->toArray())->label('Role');
 
           \App\Models\User::updating(function ($entry) {
               if (request('password') == null) {
