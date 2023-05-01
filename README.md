@@ -15,7 +15,7 @@ This Web System is built in PHP Laravel using multiple libraries, packages and f
 
 - [Rubix ML](https://rubixml.com/) - Machine learning and deep learning library for PHP
 - [Laravel UI](https://laravel.com/docs/7.x/authentication) & [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum) - Laravel Authentication
-- [Barryvdh/domPDF](github.com/Barryvdh/domPDF) - DOMPDF Wrapper  for Laravel
+- [Barryvdh/domPDF](https://github.com/Barryvdh/domPDF) - DOMPDF Wrapper  for Laravel
 - [Backpack](https://backpackforlaravel.com/) - Admin Panel
 - [anhskohbo/no-captcha](anhskohbo/no-captcha) - No CAPTCHA reCAPTCHA For Laravel
 - [Other Laravel Required Dependencies](https://laravel.com/docs/10.x/installation)
