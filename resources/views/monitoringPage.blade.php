@@ -9,7 +9,6 @@
                       @csrf
                       <button type="submit" class='btn btn-primary' onclick="generate()">Generate PDF</button>
                   </form>
-                  
 
                     @if ($res->updateData->checkUD == 1)
                     <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="/updateData">
